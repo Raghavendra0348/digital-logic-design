@@ -11,8 +11,10 @@ import { toast } from "sonner";
 
 const HammingDecoder = () => {
   const [receivedCode, setReceivedCode] = useState("1010110");
+  const [useOddParity, setUseOddParity] = useState(false);
   const [errorPosition, setErrorPosition] = useState<number | null>(null);
   const [correctedCode, setCorrectedCode] = useState("");
+  const [decodingSteps, setDecodingSteps] = useState<string[]>([]);
 
   const handleDetect = () => {
     if (!/^[01]+$/.test(receivedCode)) {
@@ -20,15 +22,21 @@ const HammingDecoder = () => {
       return;
     }
 
-    const parityBits = [];
-    for (let i = 0; 2 ** i <= receivedCode.length; i++) parityBits.push(2 ** i);
+    const result = detectAndCorrectError(receivedCode, useOddParity);
+    if (!result) {
+      toast.error("Invalid input!");
+      return;
+    }
 
-    const { correctedCode, errorPosition } = detectAndCorrectError(receivedCode, parityBits);
-    setCorrectedCode(correctedCode);
-    setErrorPosition(errorPosition);
+    setCorrectedCode(result.correctedCode);
+    setErrorPosition(result.errorPosition);
+    setDecodingSteps(result.steps);
 
-    if (errorPosition) toast.info(`Error found at position ${errorPosition}`);
-    else toast.success("No error detected!");
+    if (result.errorPosition) {
+      toast.info(`Error found at position ${result.errorPosition}`);
+    } else {
+      toast.success("No error detected!");
+    }
   };
 
   return (
@@ -43,7 +51,7 @@ const HammingDecoder = () => {
           <p className="text-lg text-muted-foreground">Detect and correct single-bit errors</p>
         </motion.div>
 
-        <Card className="glass-strong p-8 max-w-3xl mx-auto border-2 border-secondary/30">
+        <Card className="glass-strong p-8 max-w-3xl mx-auto mb-10 border-2 border-secondary/30">
           <div className="flex items-center gap-3 mb-6">
             <AlertCircle className="w-6 h-6 text-secondary" />
             <h3 className="font-display text-2xl font-bold">Received Code</h3>
@@ -54,23 +62,75 @@ const HammingDecoder = () => {
             value={receivedCode}
             onChange={(e) => setReceivedCode(e.target.value.replace(/[^01]/g, ""))}
             className="glass border-secondary/50 text-xl font-mono h-14 mb-4"
+            placeholder="Enter received Hamming code"
           />
 
-          <Button variant="neon" size="lg" onClick={handleDetect}><Shield className="w-4 h-4" /> Detect Error</Button>
+          <div className="flex items-center gap-4 mb-6">
+            <h4 className="font-semibold text-lg">Parity Type:</h4>
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="decoderParity"
+                  checked={!useOddParity}
+                  onChange={() => setUseOddParity(false)}
+                  className="w-4 h-4 text-secondary"
+                />
+                <span className="text-lg">Even Parity</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="decoderParity"
+                  checked={useOddParity}
+                  onChange={() => setUseOddParity(true)}
+                  className="w-4 h-4 text-secondary"
+                />
+                <span className="text-lg">Odd Parity</span>
+              </label>
+            </div>
+          </div>
+
+          <Button variant="neon" size="lg" onClick={handleDetect}>
+            <Shield className="w-4 h-4" /> Detect & Correct Error
+          </Button>
 
           {correctedCode && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-6 glass p-6 rounded-lg">
               {errorPosition ? (
-                <p className="text-destructive font-bold text-lg mb-2">
-                  ⚠️ Error detected at position {errorPosition}
-                </p>
+                <div>
+                  <p className="text-destructive font-bold text-lg mb-2">
+                    ⚠️ Error detected at position {errorPosition}
+                  </p>
+                  <p className="text-sm mb-2">Original Code: <span className="font-mono">{receivedCode}</span></p>
+                  <p className="text-sm">Corrected Code: <span className="font-mono text-success">{correctedCode}</span></p>
+                </div>
               ) : (
-                <p className="text-success font-bold text-lg mb-2">✅ No Error Found</p>
+                <div>
+                  <p className="text-success font-bold text-lg mb-2">✅ No Error Found</p>
+                  <p className="text-sm">Code: <span className="font-mono">{correctedCode}</span></p>
+                </div>
               )}
-              <p className="text-sm">Corrected Code: <span className="font-mono">{correctedCode}</span></p>
             </motion.div>
           )}
         </Card>
+
+        {decodingSteps.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <Card className="glass-strong p-6 max-w-5xl mx-auto border-2 border-secondary/20">
+              <h3 className="font-display text-2xl font-bold mb-4 text-secondary">Decoding Steps</h3>
+              <div className="space-y-4">
+                {decodingSteps.map((step, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
+                    <div className="glass p-4 rounded border border-secondary/20">
+                      <p className="text-sm leading-relaxed">{step}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </Card>
+          </motion.div>
+        )}
       </div>
     </div>
   );
