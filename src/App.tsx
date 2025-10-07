@@ -21,6 +21,8 @@ import HammingCode from "./pages/HammingCode";
 import HammingDecoder from "./pages/HammingDecoder";
 import Learn from "./pages/Learn";
 import NotFound from "./pages/NotFound";
+import HammingCodeArticle from "./pages/blog/HammingCodeArticle";
+import BooleanAlgebraArticle from "./pages/blog/BooleanAlgebraArticle";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +48,8 @@ const App = () => (
           <Route path="/combinational" element={<Combinational />} />
           <Route path="/sequential" element={<Sequential />} />
           <Route path="/learn" element={<Learn />} />
+          <Route path="/blog/understanding-hamming-code" element={<HammingCodeArticle />} />
+          <Route path="/blog/boolean-algebra-fundamentals" element={<BooleanAlgebraArticle />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
