@@ -17,6 +17,7 @@ export const Navbar = () => {
     { name: "Hamming Decoder", path: "/hamming-decoder" },
     { name: "Number Systems", path: "/number-systems" },
     { name: "Boolean Algebra", path: "/boolean-algebra" },
+    { name: "Karnaugh Maps", path: "/karnaugh-maps" },
     { name: "Combinational", path: "/combinational" },
     { name: "Sequential", path: "/sequential" },
     { name: "Contact", path: "/contact" },
