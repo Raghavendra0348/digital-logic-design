@@ -29,6 +29,21 @@ const SequentialVsCombinationalArticle = () => {
                                                 <h1 className="font-display text-4xl md:text-5xl font-bold mb-4 text-glow-cyan">
                                                         Sequential vs Combinational Circuits: Key Differences Explained
                                                 </h1>
+
+                                                {/* Hero Image Section */}
+                                                <div className="relative mb-6 rounded-lg overflow-hidden">
+                                                        <img
+                                                                src="/sequential-combinational-bg.svg"
+                                                                alt="Sequential and combinational circuit comparison"
+                                                                className="w-full h-64 md:h-80 object-cover"
+                                                        />
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
+                                                                <div className="p-6 text-white">
+                                                                        <p className="text-sm opacity-90">Comparison of sequential and combinational digital circuits</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+
                                                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                                         <span>By Logic Glow Team</span>
                                                         <span>•</span>
@@ -77,6 +92,24 @@ const SequentialVsCombinationalArticle = () => {
                                                         <li><strong>No Clock Required:</strong> Asynchronous operation</li>
                                                         <li><strong>Stateless:</strong> No concept of previous states</li>
                                                 </ul>
+
+                                                {/* Circuit Comparison Visual */}
+                                                <Card className="glass-strong border-primary/20 mb-6">
+                                                        <CardContent className="p-6">
+                                                                <div className="relative mb-4 rounded-lg overflow-hidden">
+                                                                        <img
+                                                                                src="/hero-circuit.jpg"
+                                                                                alt="Combinational circuit example with logic gates"
+                                                                                className="w-full h-40 object-cover"
+                                                                        />
+                                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                                                                <div className="p-4 text-white">
+                                                                                        <p className="text-sm">Combinational logic: Output = f(Current Inputs)</p>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </CardContent>
+                                                </Card>
 
                                                 <h3 className="text-2xl font-semibold mb-4">Common Examples:</h3>
                                                 <div className="grid md:grid-cols-2 gap-4 mb-8">
@@ -130,6 +163,24 @@ const SequentialVsCombinationalArticle = () => {
                                                         <li><strong>State-Dependent:</strong> Output depends on current input AND previous state</li>
                                                         <li><strong>Temporal Behavior:</strong> Behavior changes over time</li>
                                                 </ul>
+
+                                                {/* Sequential Circuit Visual */}
+                                                <Card className="glass-strong border-primary/20 mb-6">
+                                                        <CardContent className="p-6">
+                                                                <div className="relative mb-4 rounded-lg overflow-hidden">
+                                                                        <img
+                                                                                src="/hero-circuit.jpg"
+                                                                                alt="Sequential circuit with flip-flops and memory elements"
+                                                                                className="w-full h-40 object-cover"
+                                                                        />
+                                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                                                                <div className="p-4 text-white">
+                                                                                        <p className="text-sm">Sequential logic: Output = f(Current Inputs, Previous State)</p>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </CardContent>
+                                                </Card>
 
                                                 <h3 className="text-2xl font-semibold mb-4">Common Examples:</h3>
                                                 <div className="grid md:grid-cols-2 gap-4 mb-8">

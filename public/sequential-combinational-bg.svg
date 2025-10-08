@@ -1,0 +1,93 @@
+<svg width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sequentialGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="techGrid" width="12" height="12" patternUnits="userSpaceOnUse">
+      <path d="M 12 0 L 0 0 0 12" fill="none" stroke="#6b7280" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="240" fill="url(#sequentialGrad)"/>
+  <rect width="400" height="240" fill="url(#techGrid)"/>
+  
+  <!-- Combinational Circuit Section -->
+  <g transform="translate(40, 40)">
+    <text x="70" y="15" text-anchor="middle" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">Combinational</text>
+    
+    <!-- Input -->
+    <circle cx="10" cy="30" r="4" fill="#22c55e"/>
+    <circle cx="10" cy="50" r="4" fill="#22c55e"/>
+    <text x="25" y="35" fill="#94a3b8" font-family="sans-serif" font-size="10">A</text>
+    <text x="25" y="55" fill="#94a3b8" font-family="sans-serif" font-size="10">B</text>
+    
+    <!-- Logic gate -->
+    <rect x="50" y="25" width="40" height="30" fill="#1e40af" stroke="#1d4ed8" stroke-width="2" rx="4"/>
+    <text x="70" y="43" text-anchor="middle" fill="white" font-family="sans-serif" font-size="10" font-weight="bold">Logic</text>
+    
+    <!-- Output -->
+    <circle cx="120" cy="40" r="4" fill="#f59e0b"/>
+    <text x="135" y="45" fill="#94a3b8" font-family="sans-serif" font-size="10">Y</text>
+    
+    <!-- Connections -->
+    <line x1="14" y1="30" x2="50" y2="30" stroke="#22c55e" stroke-width="2"/>
+    <line x1="14" y1="50" x2="50" y2="50" stroke="#22c55e" stroke-width="2"/>
+    <line x1="90" y1="40" x2="116" y2="40" stroke="#f59e0b" stroke-width="2"/>
+    
+    <!-- Formula -->
+    <text x="70" y="75" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="11" font-weight="bold">Y = f(A,B)</text>
+  </g>
+  
+  <!-- Sequential Circuit Section -->
+  <g transform="translate(220, 40)">
+    <text x="70" y="15" text-anchor="middle" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">Sequential</text>
+    
+    <!-- Input -->
+    <circle cx="10" cy="30" r="4" fill="#22c55e"/>
+    <circle cx="10" cy="50" r="4" fill="#22c55e"/>
+    <text x="25" y="35" fill="#94a3b8" font-family="sans-serif" font-size="10">A</text>
+    <text x="25" y="55" fill="#94a3b8" font-family="sans-serif" font-size="10">B</text>
+    
+    <!-- Flip-flop/Memory -->
+    <rect x="50" y="25" width="40" height="30" fill="#7c3aed" stroke="#8b5cf6" stroke-width="2" rx="4"/>
+    <text x="70" y="40" text-anchor="middle" fill="white" font-family="sans-serif" font-size="9" font-weight="bold">FF</text>
+    <text x="70" y="50" text-anchor="middle" fill="white" font-family="sans-serif" font-size="8">Memory</text>
+    
+    <!-- Clock -->
+    <path d="M 60 55 L 65 60 L 70 55 L 75 60 L 80 55" stroke="#fbbf24" stroke-width="2" fill="none"/>
+    <text x="70" y="70" text-anchor="middle" fill="#fbbf24" font-family="sans-serif" font-size="8">Clock</text>
+    
+    <!-- Output -->
+    <circle cx="120" cy="40" r="4" fill="#f59e0b"/>
+    <text x="135" y="45" fill="#94a3b8" font-family="sans-serif" font-size="10">Y</text>
+    
+    <!-- Feedback -->
+    <path d="M 120 45 Q 140 60 140 80 Q 140 100 70 100 Q 40 100 40 70 L 40 55" 
+          stroke="#ef4444" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+    
+    <!-- Connections -->
+    <line x1="14" y1="30" x2="50" y2="30" stroke="#22c55e" stroke-width="2"/>
+    <line x1="14" y1="50" x2="50" y2="50" stroke="#22c55e" stroke-width="2"/>
+    <line x1="90" y1="40" x2="116" y2="40" stroke="#f59e0b" stroke-width="2"/>
+    
+    <!-- Formula -->
+    <text x="70" y="120" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="10" font-weight="bold">Y = f(A,B,State)</text>
+  </g>
+  
+  <!-- Key Differences -->
+  <g transform="translate(50, 160)">
+    <rect x="0" y="0" width="300" height="60" fill="rgba(0,0,0,0.7)" stroke="#64748b" stroke-width="1" rx="4"/>
+    
+    <text x="20" y="20" fill="#22c55e" font-family="sans-serif" font-size="11" font-weight="bold">Combinational:</text>
+    <text x="20" y="35" fill="#94a3b8" font-family="sans-serif" font-size="10">• No memory • Immediate output</text>
+    
+    <text x="180" y="20" fill="#8b5cf6" font-family="sans-serif" font-size="11" font-weight="bold">Sequential:</text>
+    <text x="180" y="35" fill="#94a3b8" font-family="sans-serif" font-size="10">• Has memory • Clock dependent</text>
+    <text x="180" y="50" fill="#94a3b8" font-family="sans-serif" font-size="10">• State-based output</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="25" text-anchor="middle" fill="white" font-family="sans-serif" font-size="16" font-weight="bold">Sequential vs Combinational Circuits</text>
+</svg>

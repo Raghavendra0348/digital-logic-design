@@ -1,0 +1,111 @@
+<svg width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="flipflopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f2937;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="memoryGrid" width="14" height="14" patternUnits="userSpaceOnUse">
+      <path d="M 14 0 L 0 0 0 14" fill="none" stroke="#6b7280" stroke-width="0.4" opacity="0.4"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="240" fill="url(#flipflopGrad)"/>
+  <rect width="400" height="240" fill="url(#memoryGrid)"/>
+  
+  <!-- D Flip-Flop -->
+  <g transform="translate(60, 60)">
+    <rect x="0" y="0" width="60" height="50" fill="#1e40af" stroke="#3b82f6" stroke-width="2" rx="4"/>
+    <text x="30" y="20" text-anchor="middle" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">D FF</text>
+    <text x="30" y="35" text-anchor="middle" fill="#dbeafe" font-family="sans-serif" font-size="8">Flip-Flop</text>
+    
+    <!-- Inputs -->
+    <line x1="-15" y1="15" x2="0" y2="15" stroke="white" stroke-width="2"/>
+    <text x="-20" y="20" fill="#94a3b8" font-family="sans-serif" font-size="10">D</text>
+    
+    <!-- Clock -->
+    <path d="M -15 35 L -10 30 L -5 35 L 0 30" stroke="#fbbf24" stroke-width="2" fill="none"/>
+    <text x="-20" y="45" fill="#fbbf24" font-family="sans-serif" font-size="8">CLK</text>
+    
+    <!-- Outputs -->
+    <line x1="60" y1="15" x2="80" y2="15" stroke="#22c55e" stroke-width="2"/>
+    <text x="85" y="20" fill="#94a3b8" font-family="sans-serif" font-size="10">Q</text>
+    
+    <line x1="60" y1="35" x2="80" y2="35" stroke="#ef4444" stroke-width="2"/>
+    <text x="85" y="40" fill="#94a3b8" font-family="sans-serif" font-size="10">Q̄</text>
+  </g>
+  
+  <!-- JK Flip-Flop -->
+  <g transform="translate(200, 60)">
+    <rect x="0" y="0" width="60" height="50" fill="#7c3aed" stroke="#8b5cf6" stroke-width="2" rx="4"/>
+    <text x="30" y="20" text-anchor="middle" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">JK FF</text>
+    <text x="30" y="35" text-anchor="middle" fill="#ddd6fe" font-family="sans-serif" font-size="8">Flip-Flop</text>
+    
+    <!-- Inputs -->
+    <line x1="-15" y1="10" x2="0" y2="10" stroke="white" stroke-width="2"/>
+    <text x="-20" y="15" fill="#94a3b8" font-family="sans-serif" font-size="10">J</text>
+    
+    <line x1="-15" y1="40" x2="0" y2="40" stroke="white" stroke-width="2"/>
+    <text x="-20" y="45" fill="#94a3b8" font-family="sans-serif" font-size="10">K</text>
+    
+    <!-- Clock -->
+    <path d="M -15 25 L -10 20 L -5 25 L 0 20" stroke="#fbbf24" stroke-width="2" fill="none"/>
+    
+    <!-- Outputs -->
+    <line x1="60" y1="15" x2="80" y2="15" stroke="#22c55e" stroke-width="2"/>
+    <text x="85" y="20" fill="#94a3b8" font-family="sans-serif" font-size="10">Q</text>
+    
+    <line x1="60" y1="35" x2="80" y2="35" stroke="#ef4444" stroke-width="2"/>
+    <text x="85" y="40" fill="#94a3b8" font-family="sans-serif" font-size="10">Q̄</text>
+  </g>
+  
+  <!-- SR Latch -->
+  <g transform="translate(130, 130)">
+    <rect x="0" y="0" width="60" height="40" fill="#dc2626" stroke="#f87171" stroke-width="2" rx="4"/>
+    <text x="30" y="18" text-anchor="middle" fill="white" font-family="sans-serif" font-size="11" font-weight="bold">SR</text>
+    <text x="30" y="30" text-anchor="middle" fill="#fecaca" font-family="sans-serif" font-size="8">Latch</text>
+    
+    <!-- Inputs -->
+    <line x1="-15" y1="12" x2="0" y2="12" stroke="white" stroke-width="2"/>
+    <text x="-20" y="17" fill="#94a3b8" font-family="sans-serif" font-size="10">S</text>
+    
+    <line x1="-15" y1="28" x2="0" y2="28" stroke="white" stroke-width="2"/>
+    <text x="-20" y="33" fill="#94a3b8" font-family="sans-serif" font-size="10">R</text>
+    
+    <!-- Outputs -->
+    <line x1="60" y1="12" x2="80" y2="12" stroke="#22c55e" stroke-width="2"/>
+    <text x="85" y="17" fill="#94a3b8" font-family="sans-serif" font-size="10">Q</text>
+    
+    <line x1="60" y1="28" x2="80" y2="28" stroke="#ef4444" stroke-width="2"/>
+    <text x="85" y="33" fill="#94a3b8" font-family="sans-serif" font-size="10">Q̄</text>
+  </g>
+  
+  <!-- Timing Diagram -->
+  <g transform="translate(280, 130)">
+    <rect x="0" y="0" width="100" height="60" fill="rgba(0,0,0,0.7)" stroke="#64748b" stroke-width="1" rx="4"/>
+    <text x="50" y="15" text-anchor="middle" fill="white" font-family="sans-serif" font-size="10" font-weight="bold">Timing</text>
+    
+    <!-- Clock signal -->
+    <g stroke="#fbbf24" stroke-width="2" fill="none">
+      <path d="M 10 25 L 10 30 L 20 30 L 20 35 L 30 35 L 30 30 L 40 30 L 40 35 L 50 35"/>
+    </g>
+    <text x="8" y="40" fill="#fbbf24" font-family="sans-serif" font-size="8">CLK</text>
+    
+    <!-- Data signal -->
+    <g stroke="#22c55e" stroke-width="2" fill="none">
+      <path d="M 10 45 L 25 45 L 25 50 L 50 50"/>
+    </g>
+    <text x="8" y="55" fill="#22c55e" font-family="sans-serif" font-size="8">Q</text>
+  </g>
+  
+  <!-- Memory concept -->
+  <g transform="translate(50, 190)">
+    <rect x="0" y="0" width="300" height="35" fill="rgba(0,0,0,0.8)" stroke="#64748b" stroke-width="1" rx="4"/>
+    <text x="15" y="18" fill="#22c55e" font-family="sans-serif" font-size="11" font-weight="bold">Memory Elements:</text>
+    <text x="15" y="30" fill="#94a3b8" font-family="sans-serif" font-size="10">• Store binary state • Enable sequential logic • Clock synchronization</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="25" text-anchor="middle" fill="white" font-family="sans-serif" font-size="16" font-weight="bold">Flip-Flops & Latches</text>
+</svg>

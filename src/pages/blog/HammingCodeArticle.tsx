@@ -28,6 +28,20 @@ const HammingCodeArticle = () => {
             Understanding Hamming Code: Error Detection and Correction Made Simple
           </h1>
 
+          {/* Hero Image Section */}
+          <div className="relative mb-8 rounded-lg overflow-hidden">
+            <img
+              src="/hamming-code-bg.svg"
+              alt="Error correction visualization with Hamming code implementation"
+              className="w-full h-64 md:h-80 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
+              <div className="p-6 text-white">
+                <p className="text-sm opacity-90">Digital error correction using Hamming code algorithms</p>
+              </div>
+            </div>
+          </div>
+
           <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground mb-8">
             <div className="flex items-center gap-2">
               <User className="w-4 h-4" />
@@ -67,7 +81,7 @@ const HammingCodeArticle = () => {
               <p className="text-foreground/80 leading-relaxed mb-4">
                 Hamming codes work by strategically placing parity bits at power-of-two positions (1, 2, 4, 8, 16, etc.) within the data stream. Each parity bit covers a specific set of data bits based on binary representation.
               </p>
-              
+
               <Card className="glass border-accent/20 mb-4">
                 <CardContent className="p-6">
                   <h3 className="font-heading text-xl font-semibold mb-3 text-accent">Position Rules:</h3>
@@ -81,12 +95,36 @@ const HammingCodeArticle = () => {
               </Card>
             </section>
 
+            {/* Hamming Code Structure Visualization */}
+            <section className="mb-8">
+              <h2 className="font-display text-3xl font-bold mb-4 text-primary">Hamming Code Structure</h2>
+              <Card className="glass-strong border-primary/20">
+                <CardContent className="p-6">
+                  <div className="relative mb-4 rounded-lg overflow-hidden">
+                    <img
+                      src="/hero-circuit.jpg"
+                      alt="Hamming code bit arrangement and parity check visualization"
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                      <div className="p-4 text-white">
+                        <p className="text-sm">Visual representation of Hamming code bit positioning and error correction</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-foreground/80 leading-relaxed">
+                    Hamming codes arrange data and parity bits in a specific pattern that allows for systematic error detection and correction through strategic bit positioning.
+                  </p>
+                </CardContent>
+              </Card>
+            </section>
+
             <section className="mb-8">
               <h2 className="font-display text-3xl font-bold mb-4 text-primary">Encoding Process</h2>
               <p className="text-foreground/80 leading-relaxed mb-4">
                 Let's walk through encoding a 4-bit data word: 1011
               </p>
-              
+
               <Card className="glass border-secondary/20 mb-4">
                 <CardContent className="p-6">
                   <h3 className="font-heading text-xl font-semibold mb-3 text-secondary">Step-by-Step Encoding:</h3>
@@ -111,7 +149,7 @@ const HammingCodeArticle = () => {
               <p className="text-foreground/80 leading-relaxed mb-4">
                 When receiving a Hamming-encoded message, the decoder recalculates all parity bits. If all parities match, the data is error-free. If not, the positions of failed parity checks reveal the exact location of the error.
               </p>
-              
+
               <Card className="glass border-primary/20 mb-4">
                 <CardContent className="p-6">
                   <h3 className="font-heading text-xl font-semibold mb-3 text-primary">Error Correction Example:</h3>
@@ -169,7 +207,7 @@ const HammingCodeArticle = () => {
 
             <section className="mb-8">
               <h2 className="font-display text-3xl font-bold mb-4 text-primary">Advantages and Limitations</h2>
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="glass-strong border-green-500/20">
                   <CardContent className="p-6">
@@ -204,7 +242,7 @@ const HammingCodeArticle = () => {
               <p className="text-foreground/80 leading-relaxed mb-4">
                 Ready to experiment with Hamming codes? Use our interactive tools to encode your own data and see how error correction works in real-time.
               </p>
-              
+
               <div className="flex flex-wrap gap-4">
                 <Link to="/hamming-code">
                   <Button variant="neon" size="lg">

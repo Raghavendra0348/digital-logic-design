@@ -29,6 +29,21 @@ const KarnaughMapsTutorialArticle = () => {
                                                 <h1 className="font-display text-4xl md:text-5xl font-bold mb-4 text-glow-cyan">
                                                         Karnaugh Maps (K-Maps): Simplifying Boolean Expressions Visually
                                                 </h1>
+
+                                                {/* Hero Image Section */}
+                                                <div className="relative mb-6 rounded-lg overflow-hidden">
+                                                        <img
+                                                                src="/karnaugh-maps-bg.svg"
+                                                                alt="Karnaugh map visualization for Boolean logic simplification"
+                                                                className="w-full h-64 md:h-80 object-cover"
+                                                        />
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
+                                                                <div className="p-6 text-white">
+                                                                        <p className="text-sm opacity-90">Karnaugh map grids for Boolean expression simplification</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+
                                                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                                         <span>By Logic Glow Team</span>
                                                         <span>•</span>

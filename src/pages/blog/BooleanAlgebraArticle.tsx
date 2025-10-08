@@ -28,6 +28,20 @@ const BooleanAlgebraArticle = () => {
             Boolean Algebra Fundamentals: From Truth Tables to Logic Gates
           </h1>
 
+          {/* Hero Image Section */}
+          <div className="relative mb-8 rounded-lg overflow-hidden">
+            <img
+              src="/boolean-algebra-bg.svg"
+              alt="Boolean algebra logic gates and circuit design"
+              className="w-full h-64 md:h-80 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
+              <div className="p-6 text-white">
+                <p className="text-sm opacity-90">Boolean algebra symbols and logic gate representations</p>
+              </div>
+            </div>
+          </div>
+
           <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground mb-8">
             <div className="flex items-center gap-2">
               <User className="w-4 h-4" />
@@ -64,7 +78,7 @@ const BooleanAlgebraArticle = () => {
 
             <section className="mb-8">
               <h2 className="font-display text-3xl font-bold mb-4 text-primary">Basic Operations</h2>
-              
+
               <div className="space-y-6">
                 <Card className="glass border-accent/20">
                   <CardContent className="p-6">
@@ -125,9 +139,33 @@ const BooleanAlgebraArticle = () => {
               </div>
             </section>
 
+            {/* Logic Gates Visual Section */}
+            <section className="mb-8">
+              <h2 className="font-display text-3xl font-bold mb-4 text-primary">Logic Gates Visualization</h2>
+              <Card className="glass-strong border-primary/20">
+                <CardContent className="p-6">
+                  <div className="relative mb-4 rounded-lg overflow-hidden">
+                    <img
+                      src="/hero-circuit.jpg"
+                      alt="Basic logic gates: AND, OR, NOT"
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                      <div className="p-4 text-white">
+                        <p className="text-sm">Physical implementation of Boolean operations in digital circuits</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-foreground/80 leading-relaxed">
+                    Logic gates are the physical implementation of Boolean operations. Each gate performs a specific Boolean function, converting logical inputs into outputs according to Boolean algebra rules.
+                  </p>
+                </CardContent>
+              </Card>
+            </section>
+
             <section className="mb-8">
               <h2 className="font-display text-3xl font-bold mb-4 text-primary">Boolean Laws and Theorems</h2>
-              
+
               <Card className="glass border-secondary/20 mb-4">
                 <CardContent className="p-6">
                   <h3 className="font-heading text-xl font-semibold mb-4 text-secondary">Identity Laws</h3>
@@ -188,7 +226,7 @@ const BooleanAlgebraArticle = () => {
               <p className="text-foreground/80 leading-relaxed mb-4">
                 Let's simplify the expression: F = AB + AB' + B
               </p>
-              
+
               <Card className="glass border-primary/20">
                 <CardContent className="p-6 space-y-4">
                   <div className="font-mono text-sm space-y-3">
@@ -220,7 +258,7 @@ const BooleanAlgebraArticle = () => {
               <p className="text-foreground/80 leading-relaxed mb-4">
                 Boolean operations have direct hardware equivalents called logic gates. Each gate implements a specific Boolean operation.
               </p>
-              
+
               <div className="grid md:grid-cols-2 gap-4">
                 <Card className="glass border-accent/20">
                   <CardContent className="p-4">
@@ -280,7 +318,7 @@ const BooleanAlgebraArticle = () => {
               <p className="text-foreground/80 leading-relaxed mb-4">
                 Master Boolean algebra through hands-on practice with our interactive learning tools.
               </p>
-              
+
               <Link to="/boolean-algebra">
                 <Button variant="hero" size="lg">
                   Explore Boolean Algebra Tools

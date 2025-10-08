@@ -1,0 +1,85 @@
+<svg width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="booleanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="circuitGrid" width="15" height="15" patternUnits="userSpaceOnUse">
+      <path d="M 15 0 L 0 0 0 15" fill="none" stroke="#475569" stroke-width="0.5" opacity="0.4"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="240" fill="url(#booleanGrad)"/>
+  <rect width="400" height="240" fill="url(#circuitGrid)"/>
+  
+  <!-- Logic Gates -->
+  <!-- AND Gate -->
+  <g transform="translate(50, 50)">
+    <path d="M 0 0 L 40 0 Q 60 0 60 20 Q 60 40 40 40 L 0 40 Z" fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+    <text x="30" y="25" text-anchor="middle" fill="white" font-family="sans-serif" font-size="10" font-weight="bold">AND</text>
+    <!-- Input lines -->
+    <line x1="-15" y1="10" x2="0" y2="10" stroke="white" stroke-width="2"/>
+    <line x1="-15" y1="30" x2="0" y2="30" stroke="white" stroke-width="2"/>
+    <!-- Output line -->
+    <line x1="60" y1="20" x2="80" y2="20" stroke="white" stroke-width="2"/>
+  </g>
+  
+  <!-- OR Gate -->
+  <g transform="translate(150, 50)">
+    <path d="M 0 0 Q 20 0 40 20 Q 20 40 0 40 Q 15 20 0 0" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+    <text x="20" y="25" text-anchor="middle" fill="white" font-family="sans-serif" font-size="10" font-weight="bold">OR</text>
+    <!-- Input lines -->
+    <line x1="-15" y1="10" x2="0" y2="10" stroke="white" stroke-width="2"/>
+    <line x1="-15" y1="30" x2="0" y2="30" stroke="white" stroke-width="2"/>
+    <!-- Output line -->
+    <line x1="40" y1="20" x2="60" y2="20" stroke="white" stroke-width="2"/>
+  </g>
+  
+  <!-- NOT Gate -->
+  <g transform="translate(250, 50)">
+    <path d="M 0 10 L 0 30 L 35 20 Z" fill="#ef4444" stroke="#dc2626" stroke-width="2"/>
+    <circle cx="40" cy="20" r="5" fill="none" stroke="#dc2626" stroke-width="2"/>
+    <text x="18" y="52" text-anchor="middle" fill="white" font-family="sans-serif" font-size="10" font-weight="bold">NOT</text>
+    <!-- Input line -->
+    <line x1="-15" y1="20" x2="0" y2="20" stroke="white" stroke-width="2"/>
+    <!-- Output line -->
+    <line x1="45" y1="20" x2="65" y2="20" stroke="white" stroke-width="2"/>
+  </g>
+  
+  <!-- Truth Table -->
+  <g transform="translate(50, 120)">
+    <rect x="0" y="0" width="120" height="80" fill="rgba(0,0,0,0.7)" stroke="#64748b" stroke-width="1" rx="4"/>
+    <text x="60" y="15" text-anchor="middle" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">Truth Table</text>
+    
+    <!-- Headers -->
+    <text x="15" y="35" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">A</text>
+    <text x="35" y="35" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">B</text>
+    <text x="60" y="35" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">AND</text>
+    <text x="85" y="35" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">OR</text>
+    <text x="105" y="35" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="10">NOT A</text>
+    
+    <!-- Data -->
+    <text x="15" y="50" text-anchor="middle" fill="white" font-family="monospace" font-size="10">0</text>
+    <text x="35" y="50" text-anchor="middle" fill="white" font-family="monospace" font-size="10">0</text>
+    <text x="60" y="50" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="10">0</text>
+    <text x="85" y="50" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="10">0</text>
+    <text x="105" y="50" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="10">1</text>
+    
+    <text x="15" y="65" text-anchor="middle" fill="white" font-family="monospace" font-size="10">1</text>
+    <text x="35" y="65" text-anchor="middle" fill="white" font-family="monospace" font-size="10">1</text>
+    <text x="60" y="65" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="10">1</text>
+    <text x="85" y="65" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="10">1</text>
+    <text x="105" y="65" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="10">0</text>
+  </g>
+  
+  <!-- Boolean Expression -->
+  <g transform="translate(200, 140)">
+    <rect x="0" y="0" width="150" height="50" fill="rgba(0,0,0,0.7)" stroke="#64748b" stroke-width="1" rx="4"/>
+    <text x="75" y="20" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="14" font-weight="bold">A·B + A'·C</text>
+    <text x="75" y="35" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="10">Boolean Expression</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="25" text-anchor="middle" fill="white" font-family="sans-serif" font-size="16" font-weight="bold">Boolean Algebra & Logic Gates</text>
+</svg>

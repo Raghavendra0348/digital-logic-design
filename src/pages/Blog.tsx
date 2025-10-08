@@ -12,7 +12,7 @@ const blogPosts = [
     date: "January 12, 2025",
     slug: "understanding-hamming-code",
     category: "Error Correction",
-    image: "/favicon.svg",
+    image: "/hamming-code-bg.svg",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const blogPosts = [
     date: "January 10, 2025",
     slug: "boolean-algebra-fundamentals",
     category: "Logic Design",
-    image: "/favicon.svg",
+    image: "/boolean-algebra-bg.svg",
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const blogPosts = [
     date: "January 8, 2025",
     slug: "sequential-vs-combinational",
     category: "Circuit Design",
-    image: "/favicon.svg",
+    image: "/sequential-combinational-bg.svg",
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ const blogPosts = [
     date: "January 5, 2025",
     slug: "number-systems-conversion-guide",
     category: "Number Systems",
-    image: "/favicon.svg",
+    image: "/number-systems-bg.svg",
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ const blogPosts = [
     date: "January 3, 2025",
     slug: "karnaugh-maps-tutorial",
     category: "Logic Minimization",
-    image: "/favicon.svg",
+    image: "/karnaugh-maps-bg.svg",
   },
   {
     id: 6,
@@ -62,7 +62,7 @@ const blogPosts = [
     date: "January 1, 2025",
     slug: "flip-flops-and-latches-guide",
     category: "Sequential Logic",
-    image: "/favicon.svg",
+    image: "/flip-flops-latches-bg.svg",
   },
 ];
 
@@ -92,10 +92,18 @@ const Blog = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-strong rounded-xl overflow-hidden border border-primary/20 hover:border-primary/40 transition-all duration-300"
+                className="group glass-strong rounded-xl overflow-hidden border border-primary/20 hover:border-primary/40 transition-all duration-300"
               >
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <BookOpen className="w-16 h-16 text-primary/50" />
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={`${post.title} - ${post.category}`}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute top-3 right-3">
+                    <BookOpen className="w-6 h-6 text-white/80" />
+                  </div>
                 </div>
 
                 <div className="p-6">

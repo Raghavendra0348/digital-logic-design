@@ -29,6 +29,21 @@ const FlipFlopsAndLatchesArticle = () => {
                                                 <h1 className="font-display text-4xl md:text-5xl font-bold mb-4 text-glow-cyan">
                                                         Flip-Flops and Latches: Building Blocks of Sequential Logic
                                                 </h1>
+
+                                                {/* Hero Image Section */}
+                                                <div className="relative mb-6 rounded-lg overflow-hidden">
+                                                        <img
+                                                                src="/flip-flops-latches-bg.svg"
+                                                                alt="Flip-flop and latch circuits in digital logic design"
+                                                                className="w-full h-64 md:h-80 object-cover"
+                                                        />
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
+                                                                <div className="p-6 text-white">
+                                                                        <p className="text-sm opacity-90">Flip-flop and latch circuit diagrams and symbols</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+
                                                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                                         <span>By Logic Glow Team</span>
                                                         <span>•</span>
