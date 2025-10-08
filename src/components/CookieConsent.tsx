@@ -4,6 +4,13 @@ import { Cookie, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
+// Extend window interface for gtag
+declare global {
+        interface Window {
+                gtag?: (command: string, action: string, params: Record<string, string>) => void;
+        }
+}
+
 export const CookieConsent = () => {
         const [isVisible, setIsVisible] = useState(false);
         const [isLoaded, setIsLoaded] = useState(false);
@@ -28,8 +35,8 @@ export const CookieConsent = () => {
                 setIsLoaded(true);
 
                 // Initialize analytics or other services here if needed
-                if (typeof window !== "undefined" && (window as any).gtag) {
-                        (window as any).gtag("consent", "update", {
+                if (typeof window !== "undefined" && window.gtag) {
+                        window.gtag("consent", "update", {
                                 analytics_storage: "granted",
                                 ad_storage: "granted",
                                 ad_user_data: "granted",
@@ -45,8 +52,8 @@ export const CookieConsent = () => {
                 setIsLoaded(true);
 
                 // Ensure analytics is disabled
-                if (typeof window !== "undefined" && (window as any).gtag) {
-                        (window as any).gtag("consent", "update", {
+                if (typeof window !== "undefined" && window.gtag) {
+                        window.gtag("consent", "update", {
                                 analytics_storage: "denied",
                                 ad_storage: "denied",
                                 ad_user_data: "denied",

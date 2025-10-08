@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useInView, MotionValue } from "framer-motion";
 import { useRef, useMemo, useState, useEffect } from "react";
 import {
   Binary,
@@ -12,7 +12,7 @@ import {
 import { NavigationCard } from "@/components/NavigationCard";
 
 // Enhanced floating particles with better performance
-const FloatingParticles = ({ scrollYProgress }: { scrollYProgress: any }) => {
+const FloatingParticles = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => {
   const particles = useMemo(() =>
     Array.from({ length: 15 }, (_, i) => ({
       id: i,
@@ -144,6 +144,109 @@ const colorMap = {
     glow: "0 0 20px rgba(34, 197, 94, 0.6), 0 0 40px rgba(34, 197, 94, 0.3)",
     particle: "rgba(34, 197, 94, 0.8)"
   },
+};
+
+// Separate component to handle card animations
+interface AnimatedCardProps {
+  card: {
+    title: string;
+    description: string;
+    icon: LucideIcon;
+    to: string;
+    color: "cyan" | "blue" | "purple" | "green";
+  };
+  index: number;
+  scrollYProgress: MotionValue<number>;
+  cardWidth: number;
+  cardHeight: number;
+}
+
+const AnimatedCard = ({ card, index, scrollYProgress, cardWidth, cardHeight }: AnimatedCardProps) => {
+  const delay = index * 0.15;
+
+  // Scroll-based animations - cards stay visible throughout scroll
+  const cardOpacity = useTransform(
+    scrollYProgress,
+    [0.05, 0.15, 0.95, 1],
+    [0, 1, 1, 0]
+  );
+
+  const cardScale = useTransform(
+    scrollYProgress,
+    [0.05, 0.15, 0.95, 1],
+    [0.9, 1, 1, 0.9]
+  );
+
+  const cardY = useTransform(
+    scrollYProgress,
+    [0.05, 0.15, 0.95, 1],
+    [30, 0, 0, -30]
+  );
+
+  return (
+    <motion.div
+      className="relative group"
+      style={{
+        width: cardWidth,
+        height: cardHeight,
+      }}
+      variants={{
+        hidden: {
+          opacity: 0,
+          scale: 0.8,
+          y: 40,
+        },
+        visible: {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          transition: {
+            type: "spring",
+            damping: 25,
+            stiffness: 120,
+            delay,
+            duration: 0.6,
+          }
+        }
+      }}
+      animate={{
+        y: [0, -3, 0],
+      }}
+      transition={{
+        duration: 4 + (index * 0.2),
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: delay + 2,
+      }}
+    >
+      <motion.div
+        style={{
+          opacity: cardOpacity,
+          scale: useSpring(cardScale, { stiffness: 100, damping: 20 }),
+          y: useSpring(cardY, { stiffness: 100, damping: 20 }),
+        }}
+        className="w-full h-full"
+      >
+        <NavigationCard
+          title={card.title}
+          description={card.description}
+          icon={card.icon}
+          to={card.to}
+          color={card.color}
+        />
+      </motion.div>
+
+      {/* Enhanced glow effect */}
+      <motion.div
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(circle at center, ${colorMap[card.color].particle}, transparent 70%)`,
+          filter: "blur(20px)",
+          zIndex: -1,
+        }}
+      />
+    </motion.div>
+  );
 };
 
 export const DeckToGrid = () => {
@@ -311,99 +414,16 @@ export const DeckToGrid = () => {
             gap: `${gap}px`,
           }}
         >
-          {cards.map((card, i) => {
-            // Staggered animation timing
-            const delay = i * 0.15;
-
-            // Scroll-based animations - cards stay visible throughout scroll
-            const cardOpacity = useTransform(
-              scrollYProgress,
-              [0.05, 0.15, 0.95, 1],
-              [0, 1, 1, 0]
-            );
-
-            const cardScale = useTransform(
-              scrollYProgress,
-              [0.05, 0.15, 0.95, 1],
-              [0.9, 1, 1, 0.9]
-            );
-
-            const cardY = useTransform(
-              scrollYProgress,
-              [0.05, 0.15, 0.95, 1],
-              [30, 0, 0, -30]
-            );
-
-            // No rotation - keep cards stable
-
-            const { glow } = colorMap[card.color] || colorMap.blue;
-
-            return (
-              <motion.div
-                key={card.title}
-                className="relative group"
-                style={{
-                  width: cardWidth,
-                  height: cardHeight,
-                }}
-                variants={{
-                  hidden: {
-                    opacity: 0,
-                    scale: 0.8,
-                    y: 40,
-                  },
-                  visible: {
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
-                    transition: {
-                      type: "spring",
-                      damping: 25,
-                      stiffness: 120,
-                      delay,
-                      duration: 0.6,
-                    }
-                  }
-                }}
-                animate={{
-                  y: [0, -3, 0],
-                }}
-                transition={{
-                  duration: 4 + (i * 0.2),
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: delay + 2,
-                }}
-              >
-                <motion.div
-                  style={{
-                    opacity: cardOpacity,
-                    scale: useSpring(cardScale, { stiffness: 100, damping: 20 }),
-                    y: useSpring(cardY, { stiffness: 100, damping: 20 }),
-                  }}
-                  className="w-full h-full"
-                >
-                  <NavigationCard
-                    title={card.title}
-                    description={card.description}
-                    icon={card.icon}
-                    to={card.to}
-                    color={card.color}
-                  />
-                </motion.div>
-
-                {/* Enhanced glow effect */}
-                <motion.div
-                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
-                  style={{
-                    background: `radial-gradient(circle at center, ${colorMap[card.color].particle}, transparent 70%)`,
-                    filter: "blur(20px)",
-                    zIndex: -1,
-                  }}
-                />
-              </motion.div>
-            );
-          })}
+          {cards.map((card, i) => (
+            <AnimatedCard
+              key={`${card.title}-${i}`}
+              card={card}
+              index={i}
+              scrollYProgress={scrollYProgress}
+              cardWidth={cardWidth}
+              cardHeight={cardHeight}
+            />
+          ))}
         </div>
       </motion.div>
 

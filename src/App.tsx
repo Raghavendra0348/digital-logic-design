@@ -19,12 +19,16 @@ import Combinational from "./pages/Combinational";
 import Sequential from "./pages/Sequential";
 import HammingCode from "./pages/HammingCode";
 import HammingDecoder from "./pages/HammingDecoder";
+import KarnaughMaps from "./pages/KarnaughMaps";
 import Learn from "./pages/Learn";
 
 import FAQ from "./pages/FAQ";
 import HammingCodeArticle from "./pages/blog/HammingCodeArticle";
 import BooleanAlgebraArticle from "./pages/blog/BooleanAlgebraArticle";
-import KarnaughMaps from "./pages/KarnaughMaps";
+import SequentialVsCombinationalArticle from "./pages/blog/SequentialVsCombinationalArticle";
+import NumberSystemsConversionArticle from "./pages/blog/NumberSystemsConversionArticle";
+import KarnaughMapsTutorialArticle from "./pages/blog/KarnaughMapsTutorialArticle";
+import FlipFlopsAndLatchesArticle from "./pages/blog/FlipFlopsAndLatchesArticle";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +58,10 @@ const App = () => (
           <Route path="/faq" element={<FAQ />} />
           <Route path="/blog/understanding-hamming-code" element={<HammingCodeArticle />} />
           <Route path="/blog/boolean-algebra-fundamentals" element={<BooleanAlgebraArticle />} />
+          <Route path="/blog/sequential-vs-combinational" element={<SequentialVsCombinationalArticle />} />
+          <Route path="/blog/number-systems-conversion-guide" element={<NumberSystemsConversionArticle />} />
+          <Route path="/blog/karnaugh-maps-tutorial" element={<KarnaughMapsTutorialArticle />} />
+          <Route path="/blog/flip-flops-and-latches-guide" element={<FlipFlopsAndLatchesArticle />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

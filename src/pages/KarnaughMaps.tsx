@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { CircuitBackground } from "@/components/CircuitBackground";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -65,7 +65,7 @@ const KarnaughMaps = () => {
   };
 
   // Generate truth table for current variable count
-  const generateTruthTable = (vars: number) => {
+  const generateTruthTable = useCallback((vars: number) => {
     const numRows = Math.pow(2, vars);
     const table = [];
 
@@ -83,7 +83,7 @@ const KarnaughMaps = () => {
     }
 
     setTruthTable(table);
-  };
+  }, [cells]);
 
   // Convert decimal to K-map position
   const getKMapPosition = (decimal: number, vars: number): { row: number, col: number } => {
@@ -122,7 +122,7 @@ const KarnaughMaps = () => {
   };
 
   // Apply minterms to K-map
-  const applyMinterms = () => {
+  const applyMinterms = useCallback(() => {
     const terms = parseTerms(minterms);
     const dontCareTerms = parseTerms(dontCares);
     const newCells = cells.map(row => row.map(() => 0 as CellState));
@@ -142,10 +142,10 @@ const KarnaughMaps = () => {
     });
 
     setCells(newCells);
-  };
+  }, [minterms, dontCares, cells, variables]);
 
   // Apply maxterms to K-map
-  const applyMaxterms = () => {
+  const applyMaxterms = useCallback(() => {
     const terms = parseTerms(maxterms);
     const dontCareTerms = parseTerms(dontCares);
     const newCells = cells.map(row => row.map(() => 1 as CellState));
@@ -165,7 +165,7 @@ const KarnaughMaps = () => {
     });
 
     setCells(newCells);
-  };
+  }, [maxterms, dontCares, cells, variables]);
 
   const getRowLabels = (): string[] => {
     if (variables === 2) return ["0", "1"];
@@ -228,7 +228,7 @@ const KarnaughMaps = () => {
   };
 
   // Find optimal groups using Quine-McCluskey inspired approach
-  const findOptimalGroups = (): Array<{ cells: [number, number][], term: string, color: string }> => {
+  const findOptimalGroups = useCallback((): Array<{ cells: [number, number][], term: string, color: string }> => {
     const targetCells = simplificationMethod === 'SOP' ? 1 : 0;
     const groups = [];
     const covered = new Set<string>();
@@ -259,7 +259,8 @@ const KarnaughMaps = () => {
     }
 
     return groups;
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cells, simplificationMethod]);
 
   const isAlreadyCovered = (cell: [number, number], existingGroups: Array<{ cells: [number, number][] }>) => {
     return existingGroups.some(group =>
@@ -380,7 +381,7 @@ const KarnaughMaps = () => {
       setGroups(newGroups);
     }
     generateTruthTable(variables);
-  }, [cells, simplificationMethod, variables]);
+  }, [cells, simplificationMethod, variables, inputMethod, findOptimalGroups, generateTruthTable]);
 
   // Apply input method changes
   useEffect(() => {
@@ -389,7 +390,7 @@ const KarnaughMaps = () => {
     } else if (inputMethod === 'maxterm' && maxterms) {
       applyMaxterms();
     }
-  }, [inputMethod]);
+  }, [inputMethod, minterms, maxterms, applyMinterms, applyMaxterms]);
 
   const labels = getVariableLabels();
   const rowLabels = getRowLabels();
@@ -606,10 +607,10 @@ const KarnaughMaps = () => {
                               <button
                                 onClick={() => toggleCell(i, j)}
                                 className={`w-full h-16 border border-border transition-all duration-200 font-bold text-lg relative ${cell === 1
-                                    ? "bg-primary text-primary-foreground glow-cyan"
-                                    : cell === 'X'
-                                      ? "bg-accent text-accent-foreground"
-                                      : "bg-muted/20 text-muted-foreground hover:bg-muted/40"
+                                  ? "bg-primary text-primary-foreground glow-cyan"
+                                  : cell === 'X'
+                                    ? "bg-accent text-accent-foreground"
+                                    : "bg-muted/20 text-muted-foreground hover:bg-muted/40"
                                   }`}
                               >
                                 {cell}
@@ -815,7 +816,7 @@ const KarnaughMaps = () => {
                             <td key={j} className="p-2 text-center font-mono">{bit}</td>
                           ))}
                           <td className={`p-2 text-center font-mono font-bold ${output === 1 ? 'text-primary' :
-                              output === 'X' ? 'text-accent' : 'text-muted-foreground'
+                            output === 'X' ? 'text-accent' : 'text-muted-foreground'
                             }`}>
                             {output}
                           </td>
