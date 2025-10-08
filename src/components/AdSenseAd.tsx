@@ -33,21 +33,8 @@ export const AdSenseAd = ({
         data-ad-format={format}
         data-full-width-responsive={responsive.toString()}
       />
-      
-      {/* Development placeholder - Remove this in production */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="glass p-8 rounded-lg border-2 border-dashed border-primary/30 text-center">
-          <p className="text-sm text-muted-foreground mb-2">
-            📢 AdSense Ad Placeholder
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Format: {format} | Slot: {slot}
-          </p>
-          <p className="text-xs text-muted-foreground mt-2">
-            Replace with actual AdSense code after approval
-          </p>
-        </div>
-      )}
+
+
     </div>
   );
 };

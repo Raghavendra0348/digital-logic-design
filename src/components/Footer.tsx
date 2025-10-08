@@ -14,7 +14,7 @@ export const Footer = () => {
               Logic Glow
             </h3>
             <p className="text-foreground/70 text-sm leading-relaxed max-w-md mb-4">
-              Master digital logic design through interactive simulations and real-time visualizations. 
+              Master digital logic design through interactive simulations and real-time visualizations.
               Learn Boolean algebra, combinational circuits, sequential logic, and more – all for free.
             </p>
             <p className="text-xs text-muted-foreground">
@@ -47,6 +47,11 @@ export const Footer = () => {
               <li>
                 <Link to="/learn" className="text-foreground/70 hover:text-primary transition-colors">
                   Learn Mode
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="text-foreground/70 hover:text-primary transition-colors">
+                  FAQ
                 </Link>
               </li>
               <li>
@@ -96,6 +101,9 @@ export const Footer = () => {
             <Link to="/hamming-decoder" className="text-foreground/70 hover:text-primary transition-colors">
               Hamming Decoder
             </Link>
+            <Link to="/karnaugh-maps" className="text-foreground/70 hover:text-primary transition-colors">
+              K-map Solver
+            </Link>
             <Link to="/number-systems" className="text-foreground/70 hover:text-primary transition-colors">
               Number Systems
             </Link>
@@ -118,8 +126,8 @@ export const Footer = () => {
           </p>
           <div className="flex items-center gap-2">
             <Mail className="w-4 h-4" />
-            <a href="mailto:contact@logicglow.com" className="hover:text-primary transition-colors">
-              contact@logicglow.com
+            <a href="mailto:learnwithhraghava@gmail.com" className="hover:text-primary transition-colors">
+              learnwithhraghava@gmail.com
             </a>
           </div>
         </div>

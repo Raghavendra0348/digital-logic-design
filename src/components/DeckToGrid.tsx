@@ -175,8 +175,15 @@ export const DeckToGrid = () => {
         color: "blue",
       },
       {
+        title: "K-Map Solver",
+        description: "Karnaugh Map simplification and optimization",
+        icon: CircuitBoard,
+        to: "/karnaugh-maps",
+        color: "purple",
+      },
+      {
         title: "Combinational Circuits",
-        description: "K-Maps, adders, multiplexers & minimization",
+        description: "Adders, multiplexers & circuit minimization",
         icon: CircuitBoard,
         to: "/combinational",
         color: "purple",
@@ -220,9 +227,8 @@ export const DeckToGrid = () => {
   const headingY = useTransform(scrollYProgress, [0, 0.2], [50, 0]);
   const headingScale = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0.9, 1, 1, 0.95]);
 
-  // Dynamic background animation - stays visible throughout
+  // Static background animation - stays visible throughout
   const bgOpacity = useTransform(scrollYProgress, [0, 0.1, 0.95, 1], [0, 0.4, 0.4, 0]);
-  const bgRotate = useTransform(scrollYProgress, [0, 1], [0, 180]);
 
   // Cards entrance timing
   const cardsRef = useRef(null);
@@ -233,21 +239,19 @@ export const DeckToGrid = () => {
       ref={ref}
       className="relative py-20 md:py-40 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-black"
     >
-      {/* Enhanced animated background overlay */}
+      {/* Static background overlay */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-green-500/10"
         style={{
           opacity: bgOpacity,
-          rotate: bgRotate,
         }}
       />
 
-      {/* Additional dynamic background layers */}
+      {/* Additional static background layers */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-tl from-purple-500/5 via-transparent to-cyan-500/5"
         style={{
           opacity: useTransform(scrollYProgress, [0, 0.3, 0.95, 1], [0, 0.3, 0.3, 0]),
-          scale: useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1.1, 0.9]),
         }}
       />
 
@@ -330,18 +334,7 @@ export const DeckToGrid = () => {
               [30, 0, 0, -30]
             );
 
-            // Subtle rotation that settles quickly and stays stable
-            const cardRotate = useTransform(
-              scrollYProgress,
-              [0, 0.15, 0.2, 0.95, 1],
-              [
-                (i % 2 === 0 ? -8 : 8),
-                (i % 2 === 0 ? -2 : 2),
-                0,
-                0,
-                (i % 2 === 0 ? 2 : -2)
-              ]
-            );
+            // No rotation - keep cards stable
 
             const { glow } = colorMap[card.color] || colorMap.blue;
 
@@ -387,7 +380,6 @@ export const DeckToGrid = () => {
                     opacity: cardOpacity,
                     scale: useSpring(cardScale, { stiffness: 100, damping: 20 }),
                     y: useSpring(cardY, { stiffness: 100, damping: 20 }),
-                    rotateX: useSpring(cardRotate, { stiffness: 100, damping: 20 }),
                   }}
                   className="w-full h-full"
                 >

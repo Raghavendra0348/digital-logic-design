@@ -10,6 +10,9 @@ export const Navbar = () => {
 
   const mainLinks = [
     { name: "Home", path: "/" },
+    { name: "Hamming Encoder", path: "/hamming-code" },
+    { name: "Hamming Decoder", path: "/hamming-decoder" },
+    { name: "K-Map Solver", path: "/karnaugh-maps" },
     { name: "Learn", path: "/learn" },
     { name: "About", path: "/about" },
     { name: "Blog", path: "/blog" },
@@ -17,9 +20,6 @@ export const Navbar = () => {
   ];
 
   const toolLinks = [
-    { name: "Hamming Code", path: "/hamming-code" },
-    { name: "Hamming Decoder", path: "/hamming-decoder" },
-    { name: "K-Map Solver", path: "/karnaugh-maps" },
     { name: "Number Systems", path: "/number-systems" },
     { name: "Boolean Algebra", path: "/boolean-algebra" },
     { name: "Combinational", path: "/combinational" },
@@ -48,16 +48,16 @@ export const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-4">
             {/* Main Navigation */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5">
               {mainLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive(link.path)
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  className={`px-2.5 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${isActive(link.path)
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                 >
                   {link.name}
@@ -65,37 +65,39 @@ export const Navbar = () => {
               ))}
             </div>
 
-            {/* Tools Dropdown */}
-            <div className="relative group">
-              <button className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors flex items-center gap-1">
-                Tools
-                <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
+            {/* Tools Dropdown - Only show if there are remaining tools */}
+            {toolLinks.length > 0 && (
+              <div className="relative group">
+                <button className="px-2 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors flex items-center gap-1">
+                  More Tools
+                  <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
 
-              <div className="absolute top-full right-0 mt-2 w-52 bg-background/95 backdrop-blur border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="py-2">
-                  {toolLinks.map((link, index) => (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      className={`block px-4 py-2.5 text-sm transition-colors ${isActive(link.path)
+                <div className="absolute top-full right-0 mt-2 w-52 bg-background/95 backdrop-blur border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="py-2">
+                    {toolLinks.map((link, index) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        className={`block px-4 py-2.5 text-sm transition-colors ${isActive(link.path)
                           ? "bg-primary/10 text-primary border-r-2 border-primary"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                        } ${index === 0 ? 'rounded-t-lg' : ''} ${index === toolLinks.length - 1 ? 'rounded-b-lg' : ''}`}
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
+                          } ${index === 0 ? 'rounded-t-lg' : ''} ${index === toolLinks.length - 1 ? 'rounded-b-lg' : ''}`}
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="lg:hidden">
+            <SheetTrigger asChild className="xl:hidden">
               <Button variant="ghost" size="icon">
                 {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
@@ -114,7 +116,7 @@ export const Navbar = () => {
                 {/* Main Navigation */}
                 <div className="space-y-1">
                   <h3 className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Navigation
+                    Main Navigation
                   </h3>
                   {mainLinks.map((link) => (
                     <Link
@@ -122,8 +124,8 @@ export const Navbar = () => {
                       to={link.path}
                       onClick={() => setIsOpen(false)}
                       className={`block px-4 py-2 rounded-md text-sm font-medium transition-colors ${isActive(link.path)
-                          ? "bg-primary/10 text-primary border-l-2 border-primary"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                        ? "bg-primary/10 text-primary border-l-2 border-primary"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
                         }`}
                     >
                       {link.name}
@@ -131,25 +133,27 @@ export const Navbar = () => {
                   ))}
                 </div>
 
-                {/* Tools Navigation */}
-                <div className="space-y-1">
-                  <h3 className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Tools & Calculators
-                  </h3>
-                  {toolLinks.map((link) => (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={() => setIsOpen(false)}
-                      className={`block px-4 py-2 rounded-md text-sm font-medium transition-colors ${isActive(link.path)
+                {/* Additional Tools Navigation */}
+                {toolLinks.length > 0 && (
+                  <div className="space-y-1">
+                    <h3 className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Additional Tools
+                    </h3>
+                    {toolLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setIsOpen(false)}
+                        className={`block px-4 py-2 rounded-md text-sm font-medium transition-colors ${isActive(link.path)
                           ? "bg-primary/10 text-primary border-l-2 border-primary"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                        }`}
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
-                </div>
+                          }`}
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             </SheetContent>
           </Sheet>

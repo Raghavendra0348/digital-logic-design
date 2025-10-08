@@ -25,7 +25,7 @@ const Disclaimer = () => {
             <section>
               <h2 className="text-2xl font-bold text-accent mb-3">1. General Information</h2>
               <p className="leading-relaxed">
-                The information provided on Logic Glow (logicglow.lovable.app) is for general educational and informational purposes only. All content, including but not limited to text, graphics, images, simulations, and interactive tools, is provided "as is" without any warranty of any kind, either express or implied.
+                The information provided on Logic Glow (logicglow.com) is for general educational and informational purposes only. All content, including but not limited to text, graphics, images, simulations, and interactive tools, is provided "as is" without any warranty of any kind, either express or implied.
               </p>
             </section>
 
@@ -149,8 +149,8 @@ const Disclaimer = () => {
                 If you have questions about this Disclaimer, please contact us:
               </p>
               <ul className="list-none space-y-2 ml-4 mt-3">
-                <li><strong>Email:</strong> <a href="mailto:contact@logicglow.com" className="text-accent underline">contact@logicglow.com</a></li>
-                <li><strong>Website:</strong> <a href="https://logicglow.lovable.app/contact" className="text-accent underline">logicglow.lovable.app/contact</a></li>
+                <li><strong>Email:</strong> <a href="mailto:learnwithhraghava@gmail.com" className="text-accent underline">learnwithhraghava@gmail.com</a></li>
+                <li><strong>Website:</strong> <a href="https://logicglow.com/contact" className="text-accent underline">logicglow.com/contact</a></li>
               </ul>
             </section>
           </div>

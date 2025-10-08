@@ -1,75 +1,106 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    
-    <!-- Primary Meta Tags -->
-    <title>Logic Glow - Master Digital Logic Design & Circuit Simulations</title>
-    <meta name="title" content="Logic Glow - Master Digital Logic Design & Circuit Simulations" />
-    <meta name="description" content="Learn digital logic design through interactive simulations. Explore Boolean algebra, combinational circuits, sequential circuits, number systems, Hamming codes and more with real-time visualizations." />
-    <meta name="keywords" content="digital logic, circuit design, Boolean algebra, combinational circuits, sequential circuits, logic gates, Hamming code, number systems, educational tools, interactive learning" />
-    <meta name="author" content="Logic Glow Team" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://logicglow.lovable.app/" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://logicglow.lovable.app/" />
-    <meta property="og:title" content="Logic Glow - Master Digital Logic Design & Circuit Simulations" />
-    <meta property="og:description" content="Learn digital logic design through interactive simulations. Explore Boolean algebra, combinational circuits, and more." />
-    <meta property="og:image" content="https://logicglow.lovable.app/og-image.png" />
-    <meta property="og:site_name" content="Logic Glow" />
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://logicglow.lovable.app/" />
-    <meta name="twitter:title" content="Logic Glow - Master Digital Logic Design" />
-    <meta name="twitter:description" content="Learn digital logic design through interactive simulations" />
-    <meta name="twitter:image" content="https://logicglow.lovable.app/og-image.png" />
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- Structured Data - Organization -->
-    <script type="application/ld+json">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Primary Meta Tags -->
+  <title>Logic Glow - Master Digital Logic Design & Circuit Simulations</title>
+  <meta name="title" content="Logic Glow - Master Digital Logic Design & Circuit Simulations" />
+  <meta name="description"
+    content="Learn digital logic design through interactive simulations. Explore Boolean algebra, combinational circuits, sequential circuits, number systems, Hamming codes and more with real-time visualizations." />
+  <meta name="keywords"
+    content="digital logic, circuit design, Boolean algebra, combinational circuits, sequential circuits, logic gates, Hamming code, number systems, educational tools, interactive learning" />
+  <meta name="author" content="Logic Glow Team" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://logicglow.com/" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.svg" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.svg" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#06b6d4" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://logicglow.com/" />
+  <meta property="og:title" content="Logic Glow - Master Digital Logic Design & Circuit Simulations" />
+  <meta property="og:description"
+    content="Learn digital logic design through interactive simulations. Explore Boolean algebra, combinational circuits, and more." />
+  <meta property="og:image" content="https://logicglow.com/favicon.svg" />
+  <meta property="og:site_name" content="Logic Glow" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://logicglow.com/" />
+  <meta name="twitter:title" content="Logic Glow - Master Digital Logic Design" />
+  <meta name="twitter:description" content="Learn digital logic design through interactive simulations" />
+  <meta name="twitter:image" content="https://logicglow.com/favicon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@600;700&family=Roboto+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- Google AdSense - Add your AdSense code here after approval -->
+  <!-- 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    -->
+
+  <!-- Google Analytics 4 - Add your GA4 tracking code -->
+  <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+
+  <!-- Structured Data - Organization -->
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Logic Glow",
-      "url": "https://logicglow.lovable.app",
-      "logo": "https://logicglow.lovable.app/logo.png",
+      "url": "https://logicglow.com",
+      "logo": "https://logicglow.com/favicon.svg",
       "description": "Interactive digital logic design learning platform",
       "contactPoint": {
         "@type": "ContactPoint",
-        "email": "contact@logicglow.com",
+        "email": "learnwithhraghava@gmail.com",
         "contactType": "Customer Service"
       }
     }
     </script>
-    
-    <!-- Structured Data - WebSite -->
-    <script type="application/ld+json">
+
+  <!-- Structured Data - WebSite -->
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Logic Glow",
-      "url": "https://logicglow.lovable.app",
+      "url": "https://logicglow.com",
       "description": "Master digital logic design through interactive simulations and real-time visualizations",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://logicglow.lovable.app/search?q={search_term_string}",
+        "target": "https://logicglow.com/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     }
     </script>
-  </head>
+</head>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

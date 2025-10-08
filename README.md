@@ -1,22 +1,21 @@
-# Welcome to your Lovable project
+# Logic Glow - Interactive Digital Electronics Learning Platform
 
-## Project info
+## Project Description
 
-**URL**: https://lovable.dev/projects/c6ed0a26-a306-4dcd-a131-bb1973bf0fae
+Logic Glow is a comprehensive educational platform designed to help students and engineers master digital logic design through interactive simulations and real-time visualizations. The platform offers hands-on learning experiences with Boolean algebra, Karnaugh maps, Hamming codes, number systems, and circuit design.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Interactive Hamming Code Encoder/Decoder
+- K-Map (Karnaugh Map) Solver with visual simplification
+- Boolean Algebra calculator and simplifier
+- Number Systems converter (Binary, Decimal, Hexadecimal, Octal)
+- Combinational and Sequential circuit simulators
+- Comprehensive learning resources and tutorials
 
-**Use Lovable**
+## How to Edit This Code
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c6ed0a26-a306-4dcd-a131-bb1973bf0fae) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+You can work with this code using your preferred IDE by cloning this repository and making changes locally.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -62,12 +61,14 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/c6ed0a26-a306-4dcd-a131-bb1973bf0fae) and click on Share -> Publish.
+You can deploy this project using various platforms:
+- **Vercel**: Push to GitHub and connect your repository
+- **Netlify**: Drag and drop the build folder or connect via Git
+- **GitHub Pages**: Configure GitHub Actions for automatic deployment
 
-## Can I connect a custom domain to my Lovable project?
+## Custom Domain Setup
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+To connect a custom domain:
+1. Configure DNS settings to point to your hosting platform
+2. Set up SSL certificates for HTTPS
+3. Update the canonical URLs in the code to match your domain

@@ -12,7 +12,7 @@ const blogPosts = [
     date: "January 12, 2025",
     slug: "understanding-hamming-code",
     category: "Error Correction",
-    image: "/placeholder.svg",
+    image: "/favicon.svg",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const blogPosts = [
     date: "January 10, 2025",
     slug: "boolean-algebra-fundamentals",
     category: "Logic Design",
-    image: "/placeholder.svg",
+    image: "/favicon.svg",
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const blogPosts = [
     date: "January 8, 2025",
     slug: "sequential-vs-combinational",
     category: "Circuit Design",
-    image: "/placeholder.svg",
+    image: "/favicon.svg",
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ const blogPosts = [
     date: "January 5, 2025",
     slug: "number-systems-conversion-guide",
     category: "Number Systems",
-    image: "/placeholder.svg",
+    image: "/favicon.svg",
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ const blogPosts = [
     date: "January 3, 2025",
     slug: "karnaugh-maps-tutorial",
     category: "Logic Minimization",
-    image: "/placeholder.svg",
+    image: "/favicon.svg",
   },
   {
     id: 6,
@@ -62,7 +62,7 @@ const blogPosts = [
     date: "January 1, 2025",
     slug: "flip-flops-and-latches-guide",
     category: "Sequential Logic",
-    image: "/placeholder.svg",
+    image: "/favicon.svg",
   },
 ];
 
@@ -97,20 +97,20 @@ const Blog = () => {
                 <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                   <BookOpen className="w-16 h-16 text-primary/50" />
                 </div>
-                
+
                 <div className="p-6">
                   <span className="inline-block px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full mb-3">
                     {post.category}
                   </span>
-                  
+
                   <h2 className="font-display text-xl font-bold mb-3 text-foreground line-clamp-2">
                     {post.title}
                   </h2>
-                  
+
                   <p className="text-foreground/70 text-sm leading-relaxed mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
-                  
+
                   <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
                     <div className="flex items-center gap-1">
                       <User className="w-3 h-3" />
@@ -121,7 +121,7 @@ const Blog = () => {
                       <span>{post.date}</span>
                     </div>
                   </div>
-                  
+
                   <Button variant="ghost" className="w-full group" asChild>
                     <Link to={`/blog/${post.slug}`}>
                       Read Full Article
@@ -140,7 +140,7 @@ const Blog = () => {
               "@type": "Blog",
               "name": "Logic Glow Learning Blog",
               "description": "Educational articles and tutorials on digital logic design",
-              "url": "https://logicglow.lovable.app/blog",
+              "url": "https://logicglow.com/blog",
               "blogPost": blogPosts.map(post => ({
                 "@type": "BlogPosting",
                 "headline": post.title,
@@ -150,7 +150,7 @@ const Blog = () => {
                   "name": post.author
                 },
                 "datePublished": post.date,
-                "url": `https://logicglow.lovable.app/blog/${post.slug}`
+                "url": `https://logicglow.com/blog/${post.slug}`
               }))
             })}
           </script>

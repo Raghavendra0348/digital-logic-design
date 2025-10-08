@@ -142,8 +142,8 @@ const Terms = () => {
                 If you have questions about these Terms, please contact us:
               </p>
               <ul className="list-none space-y-2 ml-4 mt-3">
-                <li><strong>Email:</strong> <a href="mailto:contact@logicglow.com" className="text-secondary underline">contact@logicglow.com</a></li>
-                <li><strong>Website:</strong> <a href="https://logicglow.lovable.app/contact" className="text-secondary underline">logicglow.lovable.app/contact</a></li>
+                <li><strong>Email:</strong> <a href="mailto:learnwithhraghava@gmail.com" className="text-secondary underline">learnwithhraghava@gmail.com</a></li>
+                <li><strong>Website:</strong> <a href="https://logicglow.com/contact" className="text-secondary underline">logicglow.com/contact</a></li>
               </ul>
             </section>
 

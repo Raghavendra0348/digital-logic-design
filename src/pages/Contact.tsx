@@ -155,8 +155,8 @@ const Contact = () => {
               <ul className="space-y-2 text-foreground/80">
                 <li>
                   <strong>Email:</strong>{" "}
-                  <a href="mailto:contact@logicglow.com" className="text-primary hover:underline">
-                    contact@logicglow.com
+                  <a href="mailto:learnwithhraghava@gmail.com" className="text-primary hover:underline">
+                    learnwithhraghava@gmail.com
                   </a>
                 </li>
                 <li>

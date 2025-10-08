@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
             <section>
               <h2 className="text-2xl font-bold text-primary mb-3">1. Introduction</h2>
               <p className="leading-relaxed">
-                Welcome to Logic Glow ("we," "our," or "us"). We are committed to protecting your privacy and ensuring transparency about how we collect, use, and safeguard your personal information. This Privacy Policy explains our practices regarding data collection and usage when you visit our website at logicglow.lovable.app (the "Site").
+                Welcome to Logic Glow ("we," "our," or "us"). We are committed to protecting your privacy and ensuring transparency about how we collect, use, and safeguard your personal information. This Privacy Policy explains our practices regarding data collection and usage when you visit our website at logicglow.com (the "Site").
               </p>
             </section>
 
@@ -123,7 +123,7 @@ const PrivacyPolicy = () => {
                 <li><strong>Opt-Out:</strong> Opt out of data collection for advertising purposes</li>
               </ul>
               <p className="leading-relaxed mt-3">
-                To exercise these rights, contact us at <a href="mailto:contact@logicglow.com" className="text-primary underline">contact@logicglow.com</a>.
+                To exercise these rights, contact us at <a href="mailto:learnwithhraghava@gmail.com" className="text-primary underline">learnwithhraghava@gmail.com</a>.
               </p>
             </section>
 
@@ -154,8 +154,8 @@ const PrivacyPolicy = () => {
                 If you have questions or concerns about this Privacy Policy, please contact us:
               </p>
               <ul className="list-none space-y-2 ml-4 mt-3">
-                <li><strong>Email:</strong> <a href="mailto:contact@logicglow.com" className="text-primary underline">contact@logicglow.com</a></li>
-                <li><strong>Website:</strong> <a href="https://logicglow.lovable.app/contact" className="text-primary underline">logicglow.lovable.app/contact</a></li>
+                <li><strong>Email:</strong> <a href="mailto:learnwithhraghava@gmail.com" className="text-primary underline">learnwithhraghava@gmail.com</a></li>
+                <li><strong>Website:</strong> <a href="https://logicglow.com/contact" className="text-primary underline">logicglow.com/contact</a></li>
               </ul>
             </section>
           </div>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#bgGradient)" stroke="url(#iconGradient)" stroke-width="2"/>
+  
+  <!-- Lightning bolt (Zap icon) with glow effect -->
+  <path d="M35 12L25 32h8l-4 20 10-20h-8l4-20z" fill="url(#iconGradient)" filter="url(#glow)" stroke="#ffffff" stroke-width="1" stroke-linejoin="round" stroke-linecap="round"/>
+  
+  <!-- Circuit traces -->
+  <path d="M8 20h8M48 20h8M8 44h8M48 44h8" stroke="url(#iconGradient)" stroke-width="2" opacity="0.7"/>
+  <circle cx="16" cy="20" r="2" fill="url(#iconGradient)" opacity="0.8"/>
+  <circle cx="48" cy="20" r="2" fill="url(#iconGradient)" opacity="0.8"/>
+  <circle cx="16" cy="44" r="2" fill="url(#iconGradient)" opacity="0.8"/>
+  <circle cx="48" cy="44" r="2" fill="url(#iconGradient)" opacity="0.8"/>
+</svg>
