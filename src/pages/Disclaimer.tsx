@@ -25,14 +25,14 @@ const Disclaimer = () => {
             <section>
               <h2 className="text-2xl font-bold text-accent mb-3">1. General Information</h2>
               <p className="leading-relaxed">
-                The information provided on Logic Glow (logicglow.com) is for general educational and informational purposes only. All content, including but not limited to text, graphics, images, simulations, and interactive tools, is provided "as is" without any warranty of any kind, either express or implied.
+                The information provided on Digital Logic & Design (logicglow.com) is for general educational and informational purposes only. All content, including but not limited to text, graphics, images, simulations, and interactive tools, is provided "as is" without any warranty of any kind, either express or implied.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold text-accent mb-3">2. No Professional Advice</h2>
               <p className="leading-relaxed mb-3">
-                Logic Glow is an educational platform designed to teach digital logic design concepts. The content on this Site:
+                Digital Logic & Design is an educational platform designed to teach digital logic design concepts. The content on this Site:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Is NOT a substitute for professional engineering, technical, or academic advice</li>
@@ -54,7 +54,7 @@ const Disclaimer = () => {
             <section>
               <h2 className="text-2xl font-bold text-accent mb-3">4. Educational Use Only</h2>
               <p className="leading-relaxed">
-                The interactive tools, simulations, and calculators provided on Logic Glow are designed for educational demonstration purposes only. They are NOT intended for use in:
+                The interactive tools, simulations, and calculators provided on Digital Logic & Design are designed for educational demonstration purposes only. They are NOT intended for use in:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Commercial circuit design or production environments</li>
@@ -106,7 +106,7 @@ const Disclaimer = () => {
             <section>
               <h2 className="text-2xl font-bold text-accent mb-3">8. User Responsibility</h2>
               <p className="leading-relaxed">
-                By using Logic Glow, you acknowledge and agree that:
+                By using Digital Logic & Design, you acknowledge and agree that:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>You are solely responsible for how you use the information and tools provided</li>
@@ -118,7 +118,7 @@ const Disclaimer = () => {
             <section>
               <h2 className="text-2xl font-bold text-accent mb-3">9. Limitation of Liability</h2>
               <p className="leading-relaxed">
-                To the fullest extent permitted by law, Logic Glow, its owners, employees, and affiliates shall NOT be liable for any direct, indirect, incidental, consequential, or punitive damages arising from:
+                To the fullest extent permitted by law, Digital Logic & Design, its owners, employees, and affiliates shall NOT be liable for any direct, indirect, incidental, consequential, or punitive damages arising from:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Use or inability to use the Site</li>

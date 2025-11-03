@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, BookOpen, Binary, Zap, CircuitBoard, Cpu, Shield } from "lucide-react";
+import { ArrowLeft, BookOpen, Binary, Zap, CircuitBoard, Cpu, Shield, Calculator, Clock, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -34,6 +34,31 @@ const Learn = () => {
       ]
     },
     {
+      id: "arithmetic-circuits",
+      title: "Arithmetic Circuits",
+      icon: Calculator,
+      color: "accent",
+      link: "/arithmetic-circuits",
+      content: [
+        {
+          subtitle: "Half Adder",
+          description: "Adds two single bits. Produces Sum and Carry outputs. Foundation for all arithmetic circuits."
+        },
+        {
+          subtitle: "Full Adder",
+          description: "Adds three bits (A, B, Carry-in). Essential for multi-bit addition and cascade operations."
+        },
+        {
+          subtitle: "4-bit Ripple Carry Adder",
+          description: "Cascades four full adders to add two 4-bit numbers. Carry propagates through all stages."
+        },
+        {
+          subtitle: "Subtractor & Multiplier",
+          description: "Subtraction using 2's complement. 4×4 multiplier using partial products and adders."
+        }
+      ]
+    },
+    {
       id: "boolean-algebra",
       title: "Boolean Algebra",
       icon: Zap,
@@ -62,7 +87,7 @@ const Learn = () => {
       id: "combinational",
       title: "Combinational Circuits",
       icon: CircuitBoard,
-      color: "accent",
+      color: "secondary",
       link: "/combinational",
       content: [
         {
@@ -109,10 +134,35 @@ const Learn = () => {
       ]
     },
     {
+      id: "counter-design",
+      title: "Counter Design",
+      icon: Layers,
+      color: "primary",
+      link: "/counter-design",
+      content: [
+        {
+          subtitle: "Asynchronous Counters",
+          description: "Ripple counters where flip-flops are triggered by previous stages. Simple but slower."
+        },
+        {
+          subtitle: "Synchronous Counters",
+          description: "All flip-flops clocked simultaneously. Faster and more reliable for complex designs."
+        },
+        {
+          subtitle: "Up/Down Counters",
+          description: "Can count in both directions. Used in bidirectional applications and control systems."
+        },
+        {
+          subtitle: "Modulo-N Counters",
+          description: "Count to any modulus N using feedback logic. Essential for frequency division."
+        }
+      ]
+    },
+    {
       id: "hamming",
       title: "Error Detection & Correction",
       icon: Shield,
-      color: "primary",
+      color: "success",
       link: "/hamming-code",
       content: [
         {
@@ -132,13 +182,38 @@ const Learn = () => {
           description: "Used in RAM, data transmission, storage systems to ensure data integrity."
         }
       ]
+    },
+    {
+      id: "digital-clock",
+      title: "Digital Clock Project",
+      icon: Clock,
+      color: "accent",
+      link: "/digital-clock",
+      content: [
+        {
+          subtitle: "BCD Counters",
+          description: "Binary-Coded Decimal counters for seconds, minutes, and hours display."
+        },
+        {
+          subtitle: "7-Segment Display",
+          description: "Decode BCD to 7-segment format for visual time display with multiplexing."
+        },
+        {
+          subtitle: "Clock Divider",
+          description: "Frequency division to generate 1Hz clock pulse from higher frequency input."
+        },
+        {
+          subtitle: "Complete System",
+          description: "Integrated digital clock with cascaded counters, decoders, and display logic."
+        }
+      ]
     }
   ];
 
   return (
     <div className="min-h-screen relative">
       <CircuitBackground />
-      
+
       <div className="container mx-auto px-4 py-8 relative z-10">
         {/* Header */}
         <motion.div
@@ -152,7 +227,7 @@ const Learn = () => {
               Back to Home
             </Link>
           </Button>
-          
+
           <div className="flex items-center gap-4 mb-4">
             <BookOpen className="w-12 h-12 text-primary" />
             <h1 className="font-display text-4xl md:text-6xl font-bold text-glow-cyan">

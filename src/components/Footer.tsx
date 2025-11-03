@@ -11,14 +11,14 @@ export const Footer = () => {
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
             <h3 className="font-display text-2xl font-bold text-glow-cyan mb-3">
-              Logic Glow
+              Digital Logic & Design
             </h3>
             <p className="text-foreground/70 text-sm leading-relaxed max-w-md mb-4">
               Master digital logic design through interactive simulations and real-time visualizations.
               Learn Boolean algebra, combinational circuits, sequential logic, and more – all for free.
             </p>
             <p className="text-xs text-muted-foreground">
-              © {currentYear} Logic Glow. All rights reserved.
+              © {currentYear} Digital Logic & Design. All rights reserved.
             </p>
           </div>
 

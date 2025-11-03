@@ -10,8 +10,8 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
         {
-                question: "What is Logic Glow and who is it for?",
-                answer: "Logic Glow is a comprehensive educational platform designed for students, educators, and professionals learning digital logic design. Whether you're taking your first computer engineering course, preparing for exams, or refreshing your knowledge of Boolean algebra and circuit design, our interactive tools and tutorials provide hands-on learning experiences.",
+                question: "What is Digital Logic & Design and who is it for?",
+                answer: "Digital Logic & Design is a comprehensive educational platform designed for students, educators, and professionals learning digital logic design. Whether you're taking your first computer engineering course, preparing for exams, or refreshing your knowledge of Boolean algebra and circuit design, our interactive tools and tutorials provide hands-on learning experiences.",
                 category: "general"
         },
         {
@@ -25,8 +25,8 @@ const faqData: FAQItem[] = [
                 category: "tools"
         },
         {
-                question: "Can I use Logic Glow on my mobile device or tablet?",
-                answer: "Absolutely! Logic Glow is fully responsive and optimized for all devices. All interactive tools, simulations, and content work seamlessly on smartphones, tablets, laptops, and desktop computers. The touch-friendly interface ensures a great experience on mobile devices.",
+                question: "Can I use Digital Logic & Design on my mobile device or tablet?",
+                answer: "Absolutely! Digital Logic & Design is fully responsive and optimized for all devices. All interactive tools, simulations, and content work seamlessly on smartphones, tablets, laptops, and desktop computers. The touch-friendly interface ensures a great experience on mobile devices.",
                 category: "technical"
         },
         {
@@ -46,27 +46,27 @@ const faqData: FAQItem[] = [
         },
         {
                 question: "What browsers are supported?",
-                answer: "Logic Glow works on all modern web browsers including Chrome, Firefox, Safari, Edge, and Opera. We recommend using the latest browser version for the best performance and feature compatibility. JavaScript must be enabled for interactive features.",
+                answer: "Digital Logic & Design works on all modern web browsers including Chrome, Firefox, Safari, Edge, and Opera. We recommend using the latest browser version for the best performance and feature compatibility. JavaScript must be enabled for interactive features.",
                 category: "technical"
         },
         {
-                question: "Can educators use Logic Glow in their classrooms?",
-                answer: "Definitely! Logic Glow is designed with educators in mind. Teachers can use our tools for demonstrations, assign interactive exercises, and supplement their curriculum with visual simulations. All content aligns with standard digital logic and computer engineering coursework.",
+                question: "Can educators use Digital Logic & Design in their classrooms?",
+                answer: "Definitely! Digital Logic & Design is designed with educators in mind. Teachers can use our tools for demonstrations, assign interactive exercises, and supplement their curriculum with visual simulations. All content aligns with standard digital logic and computer engineering coursework.",
                 category: "general"
         },
         {
                 question: "How often is new content added?",
-                answer: "We regularly update Logic Glow with new tools, tutorials, and educational content. Major updates typically occur monthly, with bug fixes and minor improvements released as needed. Follow our blog for announcements about new features and learning resources.",
+                answer: "We regularly update Digital Logic & Design with new tools, tutorials, and educational content. Major updates typically occur monthly, with bug fixes and minor improvements released as needed. Follow our blog for announcements about new features and learning resources.",
                 category: "general"
         },
         {
-                question: "What makes Logic Glow different from other educational sites?",
-                answer: "Logic Glow combines interactive simulations with comprehensive explanations, making abstract concepts tangible. Our tools provide immediate visual feedback, step-by-step solutions, and real-time error detection. The platform is specifically focused on digital logic, ensuring deep, specialized coverage of the subject.",
+                question: "What makes Digital Logic & Design different from other educational sites?",
+                answer: "Digital Logic & Design combines interactive simulations with comprehensive explanations, making abstract concepts tangible. Our tools provide immediate visual feedback, step-by-step solutions, and real-time error detection. The platform is specifically focused on digital logic, ensuring deep, specialized coverage of the subject.",
                 category: "general"
         },
         {
                 question: "Can I suggest new tools or features?",
-                answer: "We welcome suggestions! Use our contact form to share ideas for new tools, improvements to existing features, or educational content requests. User feedback helps us prioritize development and ensure Logic Glow meets the needs of the learning community.",
+                answer: "We welcome suggestions! Use our contact form to share ideas for new tools, improvements to existing features, or educational content requests. User feedback helps us prioritize development and ensure Digital Logic & Design meets the needs of the learning community.",
                 category: "general"
         }
 ];
@@ -114,7 +114,7 @@ const FAQ = () => {
 
                                         <div className="glass-strong p-6 rounded-xl mb-8">
                                                 <p className="text-muted-foreground mb-4">
-                                                        Find answers to common questions about Logic Glow's tools, features, and educational resources.
+                                                        Find answers to common questions about Digital Logic & Design's tools, features, and educational resources.
                                                 </p>
 
                                                 {/* Category Filter */}

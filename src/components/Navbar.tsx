@@ -43,7 +43,7 @@ export const Navbar = () => {
               <Zap className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="font-display text-lg font-bold hidden sm:inline">
-              Logic<span className="text-primary">Glow</span>
+              Digital<span className="text-primary">Logic</span>
             </span>
           </Link>
 

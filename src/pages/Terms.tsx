@@ -25,7 +25,7 @@ const Terms = () => {
             <section>
               <h2 className="text-2xl font-bold text-secondary mb-3">1. Acceptance of Terms</h2>
               <p className="leading-relaxed">
-                By accessing and using Logic Glow (the "Site"), you accept and agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not use our Site. We reserve the right to modify these Terms at any time, and your continued use constitutes acceptance of any changes.
+                By accessing and using Digital Logic & Design (the "Site"), you accept and agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not use our Site. We reserve the right to modify these Terms at any time, and your continued use constitutes acceptance of any changes.
               </p>
             </section>
 
@@ -56,7 +56,7 @@ const Terms = () => {
               <h2 className="text-2xl font-bold text-secondary mb-3">3. Intellectual Property</h2>
               <h3 className="text-xl font-semibold mt-4 mb-2">3.1 Ownership</h3>
               <p className="leading-relaxed mb-3">
-                All content on the Site, including text, graphics, logos, images, code, and interactive tools, is the property of Logic Glow or its licensors and is protected by copyright, trademark, and intellectual property laws.
+                All content on the Site, including text, graphics, logos, images, code, and interactive tools, is the property of Digital Logic & Design or its licensors and is protected by copyright, trademark, and intellectual property laws.
               </p>
 
               <h3 className="text-xl font-semibold mt-4 mb-2">3.2 Limited License</h3>
@@ -100,14 +100,14 @@ const Terms = () => {
             <section>
               <h2 className="text-2xl font-bold text-secondary mb-3">7. Limitation of Liability</h2>
               <p className="leading-relaxed">
-                To the fullest extent permitted by law, Logic Glow and its affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Site, including but not limited to loss of data, profits, or business opportunities. Our total liability shall not exceed $100 USD.
+                To the fullest extent permitted by law, Digital Logic & Design and its affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Site, including but not limited to loss of data, profits, or business opportunities. Our total liability shall not exceed $100 USD.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold text-secondary mb-3">8. Indemnification</h2>
               <p className="leading-relaxed">
-                You agree to indemnify and hold harmless Logic Glow, its owners, employees, and affiliates from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from your use of the Site or violation of these Terms.
+                You agree to indemnify and hold harmless Digital Logic & Design, its owners, employees, and affiliates from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from your use of the Site or violation of these Terms.
               </p>
             </section>
 

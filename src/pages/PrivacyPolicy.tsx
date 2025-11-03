@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
             <section>
               <h2 className="text-2xl font-bold text-primary mb-3">1. Introduction</h2>
               <p className="leading-relaxed">
-                Welcome to Logic Glow ("we," "our," or "us"). We are committed to protecting your privacy and ensuring transparency about how we collect, use, and safeguard your personal information. This Privacy Policy explains our practices regarding data collection and usage when you visit our website at logicglow.com (the "Site").
+                Welcome to Digital Logic & Design ("we," "our," or "us"). We are committed to protecting your privacy and ensuring transparency about how we collect, use, and safeguard your personal information. This Privacy Policy explains our practices regarding data collection and usage when you visit our website at logicglow.com (the "Site").
               </p>
             </section>
 

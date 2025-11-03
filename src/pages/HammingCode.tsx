@@ -49,27 +49,21 @@ const HammingEncoder = () => {
 
           <div className="flex items-center gap-4 mt-4">
             <h4 className="font-semibold text-lg">Parity Type:</h4>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="parity"
-                  checked={!useOddParity}
-                  onChange={() => setUseOddParity(false)}
-                  className="w-4 h-4 text-primary"
-                />
-                <span className="text-lg">Even Parity</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="parity"
-                  checked={useOddParity}
-                  onChange={() => setUseOddParity(true)}
-                  className="w-4 h-4 text-primary"
-                />
-                <span className="text-lg">Odd Parity</span>
-              </label>
+            <div className="flex gap-3">
+              <Button
+                variant={!useOddParity ? "default" : "outline"}
+                onClick={() => setUseOddParity(false)}
+                className="font-semibold"
+              >
+                Even Parity
+              </Button>
+              <Button
+                variant={useOddParity ? "default" : "outline"}
+                onClick={() => setUseOddParity(true)}
+                className="font-semibold"
+              >
+                Odd Parity
+              </Button>
             </div>
           </div>
         </Card>

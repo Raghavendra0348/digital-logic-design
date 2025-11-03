@@ -45,7 +45,7 @@ const HammingCodeArticle = () => {
           <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground mb-8">
             <div className="flex items-center gap-2">
               <User className="w-4 h-4" />
-              <span>Logic Glow Team</span>
+              <span>Digital Logic & Design Team</span>
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />

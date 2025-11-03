@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 
 const FlipFlopsAndLatchesArticle = () => {
         useEffect(() => {
-                document.title = "Flip-Flops and Latches: Building Blocks of Sequential Logic | Logic Glow";
+                document.title = "Flip-Flops and Latches: Building Blocks of Sequential Logic | Digital Logic & Design";
                 window.scrollTo(0, 0);
         }, []);
 
@@ -45,7 +45,7 @@ const FlipFlopsAndLatchesArticle = () => {
                                                 </div>
 
                                                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                                        <span>By Logic Glow Team</span>
+                                                        <span>By Digital Logic & Design Team</span>
                                                         <span>•</span>
                                                         <span>January 1, 2025</span>
                                                         <span>•</span>

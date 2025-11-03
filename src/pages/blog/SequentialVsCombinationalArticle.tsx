@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 
 const SequentialVsCombinationalArticle = () => {
         useEffect(() => {
-                document.title = "Sequential vs Combinational Circuits: Key Differences Explained | Logic Glow";
+                document.title = "Sequential vs Combinational Circuits: Key Differences Explained | Digital Logic & Design";
                 window.scrollTo(0, 0);
         }, []);
 
@@ -45,7 +45,7 @@ const SequentialVsCombinationalArticle = () => {
                                                 </div>
 
                                                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                                        <span>By Logic Glow Team</span>
+                                                        <span>By Digital Logic & Design Team</span>
                                                         <span>•</span>
                                                         <span>January 8, 2025</span>
                                                         <span>•</span>

@@ -7,8 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Grid3x3, Lightbulb, RotateCcw, Calculator, FileText, Zap } from "lucide-react";
+import { Grid3x3, Lightbulb, RotateCcw, Calculator, FileText, Zap, Download } from "lucide-react";
 import { motion } from "framer-motion";
+import { parseBooleanExpression, validateBooleanExpression } from "@/utils/booleanParser";
+import { KMapSolver } from "@/utils/kmapSolver";
 
 type CellState = 0 | 1 | 'X'; // 0, 1, or don't care
 
@@ -17,12 +19,13 @@ const KarnaughMaps = () => {
   const [cells, setCells] = useState<CellState[][]>(
     Array(2).fill(null).map(() => Array(2).fill(0))
   );
-  const [inputMethod, setInputMethod] = useState<'manual' | 'minterm' | 'maxterm'>('manual');
+  const [inputMethod, setInputMethod] = useState<'manual' | 'minterm' | 'maxterm' | 'expression' | 'truthtable'>('manual');
   const [minterms, setMinterms] = useState('');
   const [maxterms, setMaxterms] = useState('');
   const [dontCares, setDontCares] = useState('');
+  const [booleanExpression, setBooleanExpression] = useState('');
   const [simplificationMethod, setSimplificationMethod] = useState<'SOP' | 'POS'>('SOP');
-  const [groups, setGroups] = useState<Array<{ cells: [number, number][], color: string, term: string }>>([]);
+  const [groups, setGroups] = useState<Array<{ cells: [number, number][], color: string, borderColor: string, bgColor: string, term: string, index: number }>>([]);
   const [truthTable, setTruthTable] = useState<Array<{ inputs: string, output: CellState, decimal: number }>>([]);
   const [showSteps, setShowSteps] = useState(false);
 
@@ -33,6 +36,50 @@ const KarnaughMaps = () => {
     setMinterms('');
     setMaxterms('');
     setDontCares('');
+  };
+
+  const fillAllWithOne = () => {
+    const newCells = cells.map(row => row.map(() => 1 as CellState));
+    setCells(newCells);
+  };
+
+  const fillAllWithZero = () => {
+    const newCells = cells.map(row => row.map(() => 0 as CellState));
+    setCells(newCells);
+  };
+
+  const applyBooleanExpression = () => {
+    const validation = validateBooleanExpression(booleanExpression, variables);
+
+    if (!validation.isValid) {
+      alert(validation.error || 'Invalid expression');
+      return;
+    }
+
+    try {
+      const minterms = parseBooleanExpression(booleanExpression, variables);
+      const dontCareTerms = parseTerms(dontCares);
+      const newCells = cells.map(row => row.map(() => 0 as CellState));
+
+      minterms.forEach(term => {
+        const { row, col } = getKMapPosition(term, variables);
+        if (newCells[row] && newCells[row][col] !== undefined) {
+          newCells[row][col] = 1;
+        }
+      });
+
+      dontCareTerms.forEach(term => {
+        const { row, col } = getKMapPosition(term, variables);
+        if (newCells[row] && newCells[row][col] !== undefined) {
+          newCells[row][col] = 'X';
+        }
+      });
+
+      setCells(newCells);
+    } catch (error) {
+      alert('Error parsing expression. Please check your syntax.');
+      console.error(error);
+    }
   };
 
   const handleVariableChange = (newVars: 2 | 3 | 4) => {
@@ -227,129 +274,40 @@ const KarnaughMaps = () => {
     return dontCares.sort((a, b) => a - b);
   };
 
-  // Find optimal groups using Quine-McCluskey inspired approach
-  const findOptimalGroups = useCallback((): Array<{ cells: [number, number][], term: string, color: string }> => {
+  // Find optimal groups using improved K-map solver
+  const findOptimalGroups = useCallback((): Array<{ cells: [number, number][], term: string, color: string, borderColor: string, bgColor: string, index: number }> => {
     const targetCells = simplificationMethod === 'SOP' ? 1 : 0;
-    const groups = [];
-    const covered = new Set<string>();
-    const colors = ['bg-red-500/30', 'bg-blue-500/30', 'bg-green-500/30', 'bg-yellow-500/30', 'bg-purple-500/30', 'bg-pink-500/30'];
-    let colorIndex = 0;
+    const colorSchemes = [
+      { border: 'border-red-500', bg: 'bg-red-500/20', hover: 'hover:bg-red-500/30' },
+      { border: 'border-blue-500', bg: 'bg-blue-500/20', hover: 'hover:bg-blue-500/30' },
+      { border: 'border-green-500', bg: 'bg-green-500/20', hover: 'hover:bg-green-500/30' },
+      { border: 'border-yellow-500', bg: 'bg-yellow-500/20', hover: 'hover:bg-yellow-500/30' },
+      { border: 'border-purple-500', bg: 'bg-purple-500/20', hover: 'hover:bg-purple-500/30' },
+      { border: 'border-pink-500', bg: 'bg-pink-500/20', hover: 'hover:bg-pink-500/30' },
+      { border: 'border-orange-500', bg: 'bg-orange-500/20', hover: 'hover:bg-orange-500/30' },
+      { border: 'border-cyan-500', bg: 'bg-cyan-500/20', hover: 'hover:bg-cyan-500/30' },
+    ];
 
-    // Find all possible groups (powers of 2 sizes)
-    for (let size = Math.min(cells.length * cells[0].length, 16); size >= 1; size = Math.floor(size / 2)) {
-      const possibleGroups = findGroupsOfSize(size, targetCells);
+    try {
+      const solver = new KMapSolver(cells, variables);
+      const optimalCover = solver.findOptimalCover(targetCells);
 
-      for (const group of possibleGroups) {
-        const groupKey = group.cells.map(([r, c]) => `${r},${c}`).sort().join(';');
-
-        if (!covered.has(groupKey) && group.cells.every(([r, c]) => !isAlreadyCovered([r, c], groups))) {
-          groups.push({
-            ...group,
-            color: colors[colorIndex % colors.length]
-          });
-          colorIndex++;
-
-          group.cells.forEach(([r, c]) => covered.add(`${r},${c}`));
-
-          if (groups.length >= 6) break; // Limit to 6 groups for clarity
-        }
-      }
-
-      if (groups.length >= 6) break;
+      return optimalCover.map((group, index) => {
+        const scheme = colorSchemes[index % colorSchemes.length];
+        return {
+          cells: group.cells,
+          term: group.term,
+          color: scheme.border,
+          borderColor: scheme.border,
+          bgColor: scheme.bg,
+          index: index + 1
+        };
+      });
+    } catch (error) {
+      console.error('Error finding optimal groups:', error);
+      return [];
     }
-
-    return groups;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cells, simplificationMethod]);
-
-  const isAlreadyCovered = (cell: [number, number], existingGroups: Array<{ cells: [number, number][] }>) => {
-    return existingGroups.some(group =>
-      group.cells.some(([r, c]) => r === cell[0] && c === cell[1])
-    );
-  };
-
-  const findGroupsOfSize = (size: number, targetValue: CellState) => {
-    const groups = [];
-    const rows = cells.length;
-    const cols = cells[0].length;
-
-    // Try all possible rectangular groups of the given size
-    for (let startRow = 0; startRow < rows; startRow++) {
-      for (let startCol = 0; startCol < cols; startCol++) {
-        // Try different dimensions that multiply to size
-        for (let h = 1; h <= size && h <= rows; h++) {
-          if (size % h === 0) {
-            const w = size / h;
-            if (w <= cols) {
-              const group = checkRectangularGroup(startRow, startCol, h, w, targetValue);
-              if (group) {
-                groups.push(group);
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return groups;
-  };
-
-  const checkRectangularGroup = (startRow: number, startCol: number, height: number, width: number, targetValue: CellState) => {
-    const groupCells: [number, number][] = [];
-
-    for (let r = 0; r < height; r++) {
-      for (let c = 0; c < width; c++) {
-        const row = (startRow + r) % cells.length;
-        const col = (startCol + c) % cells[0].length;
-
-        const cellValue = cells[row][col];
-        if (cellValue === targetValue || cellValue === 'X') {
-          groupCells.push([row, col]);
-        } else {
-          return null; // Invalid group
-        }
-      }
-    }
-
-    // Generate the simplified term for this group
-    const term = generateGroupTerm(groupCells);
-
-    return { cells: groupCells, term };
-  };
-
-  const generateGroupTerm = (groupCells: [number, number][]): string => {
-    if (groupCells.length === 0) return '';
-
-    const variableNames = variables === 2 ? ['A', 'B'] :
-      variables === 3 ? ['A', 'B', 'C'] :
-        ['A', 'B', 'C', 'D'];
-
-    const rowLabels = getRowLabels();
-    const colLabels = getColLabels();
-
-    // Analyze which variables are constant across the group
-    const firstCell = groupCells[0];
-    const firstRowLabel = rowLabels[firstCell[0]];
-    const firstColLabel = colLabels[firstCell[1]];
-
-    let term = '';
-
-    // For simplicity, return a basic representation
-    // This could be enhanced with proper Boolean minimization
-    if (variables === 2) {
-      const allSameRow = groupCells.every(([r, c]) => rowLabels[r] === firstRowLabel);
-      const allSameCol = groupCells.every(([r, c]) => colLabels[r] === firstColLabel);
-
-      if (allSameRow && !allSameCol) term = firstRowLabel === '0' ? "A'" : 'A';
-      else if (!allSameRow && allSameCol) term = firstColLabel === '0' ? "B'" : 'B';
-      else term = `${firstRowLabel === '0' ? "A'" : 'A'}${firstColLabel === '0' ? "B'" : 'B'}`;
-    } else {
-      // More complex logic for 3 and 4 variables
-      term = `Group(${groupCells.length} cells)`;
-    }
-
-    return term || '1';
-  };
+  }, [cells, simplificationMethod, variables]);
 
   const getSimplifiedExpression = (): { sop: string, pos: string, steps: string[] } => {
     const optimalGroups = findOptimalGroups();
@@ -392,6 +350,11 @@ const KarnaughMaps = () => {
     }
   }, [inputMethod, minterms, maxterms, applyMinterms, applyMaxterms]);
 
+  const downloadPDF = () => {
+    // Simple implementation - trigger browser print
+    window.print();
+  };
+
   const labels = getVariableLabels();
   const rowLabels = getRowLabels();
   const colLabels = getColLabels();
@@ -400,303 +363,558 @@ const KarnaughMaps = () => {
     <div className="min-h-screen relative">
       <CircuitBackground />
 
-      <div className="relative z-10 container mx-auto px-4 py-8">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         {/* Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <Badge variant="outline" className="mb-4 text-primary border-primary/50">
-            <Grid3x3 className="w-3 h-3 mr-1" />
-            Boolean Simplification
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10 sm:mb-12 lg:mb-16"
+        >
+          <Badge variant="outline" className="mb-4 sm:mb-6 text-primary border-primary/50 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
+            <Grid3x3 className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+            Boolean Logic Simplification
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent px-4">
             Karnaugh Map Solver
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
             Interactive tool to simplify Boolean expressions using Karnaugh maps.
-            Select cells to form groups and derive minimal Boolean expressions.
+            Choose from multiple input methods and get instant visualizations.
           </p>
-        </div>
+          <div className="flex flex-wrap gap-2 sm:gap-3 justify-center mt-6 sm:mt-8 px-4">
+            <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+              5 Input Methods
+            </Badge>
+            <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+              Auto Grouping
+            </Badge>
+            <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+              Step-by-Step Solution
+            </Badge>
+            <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+              Circuit Analysis
+            </Badge>
+          </div>
+        </motion.div>
 
-        {/* Main Content */}
-        <div className="grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {/* Input Methods */}
-          <Card className="glass-strong border-secondary/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-secondary" />
-                Input Method
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Choose Input Method:</Label>
-                <div className="flex flex-col gap-2">
-                  <Button
-                    variant={inputMethod === 'manual' ? 'default' : 'outline'}
-                    onClick={() => setInputMethod('manual')}
-                    size="sm"
-                    className="justify-start"
-                  >
-                    Manual Entry
-                  </Button>
-                  <Button
-                    variant={inputMethod === 'minterm' ? 'default' : 'outline'}
-                    onClick={() => setInputMethod('minterm')}
-                    size="sm"
-                    className="justify-start"
-                  >
-                    Minterms (SOP)
-                  </Button>
-                  <Button
-                    variant={inputMethod === 'maxterm' ? 'default' : 'outline'}
-                    onClick={() => setInputMethod('maxterm')}
-                    size="sm"
-                    className="justify-start"
-                  >
-                    Maxterms (POS)
-                  </Button>
+        {/* Main Content - Optimized Layout */}
+        <div className="grid xl:grid-cols-12 lg:grid-cols-1 gap-6 lg:gap-8 max-w-[1600px] mx-auto">
+          {/* Input Methods - Enhanced Card */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="xl:col-span-3 lg:col-span-1"
+          >
+            <Card className="glass-strong border-secondary/30 shadow-xl hover:shadow-2xl transition-shadow duration-300 h-full">
+              <CardHeader className="border-b border-border/50 pb-4">
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <div className="p-2 rounded-lg bg-secondary/20">
+                    <FileText className="w-5 h-5 text-secondary" />
+                  </div>
+                  Input Method
+                </CardTitle>
+                <CardDescription className="text-sm mt-2">
+                  Choose how you want to define your K-map
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-5 pt-5 pb-6">
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold text-foreground">Choose Input Method:</Label>
+                  <div className="grid grid-cols-1 gap-2">
+                    <Button
+                      variant={inputMethod === 'manual' ? 'default' : 'outline'}
+                      onClick={() => setInputMethod('manual')}
+                      size="lg"
+                      className="justify-start h-11 sm:h-12 text-left font-medium transition-all duration-200 text-sm sm:text-base"
+                    >
+                      <Grid3x3 className="w-4 h-4 mr-2 sm:mr-3" />
+                      K-Map (Manual Entry)
+                    </Button>
+                    <Button
+                      variant={inputMethod === 'truthtable' ? 'default' : 'outline'}
+                      onClick={() => setInputMethod('truthtable')}
+                      size="lg"
+                      className="justify-start h-11 sm:h-12 text-left font-medium transition-all duration-200 text-sm sm:text-base"
+                    >
+                      <FileText className="w-4 h-4 mr-2 sm:mr-3" />
+                      Truth Table
+                    </Button>
+                    <Button
+                      variant={inputMethod === 'expression' ? 'default' : 'outline'}
+                      onClick={() => setInputMethod('expression')}
+                      size="lg"
+                      className="justify-start h-11 sm:h-12 text-left font-medium transition-all duration-200 text-sm sm:text-base"
+                    >
+                      <Calculator className="w-4 h-4 mr-2 sm:mr-3" />
+                      Boolean Expression
+                    </Button>
+                    <Button
+                      variant={inputMethod === 'minterm' ? 'default' : 'outline'}
+                      onClick={() => setInputMethod('minterm')}
+                      size="lg"
+                      className="justify-start h-11 sm:h-12 text-left font-medium transition-all duration-200 text-sm sm:text-base"
+                    >
+                      <Zap className="w-4 h-4 mr-2 sm:mr-3" />
+                      Minterms
+                    </Button>
+                    <Button
+                      variant={inputMethod === 'maxterm' ? 'default' : 'outline'}
+                      onClick={() => setInputMethod('maxterm')}
+                      size="lg"
+                      className="justify-start h-11 sm:h-12 text-left font-medium transition-all duration-200 text-sm sm:text-base"
+                    >
+                      <Lightbulb className="w-4 h-4 mr-2 sm:mr-3" />
+                      Maxterms
+                    </Button>
+                  </div>
                 </div>
-              </div>
 
-              {inputMethod === 'minterm' && (
-                <div className="space-y-2">
-                  <Label htmlFor="minterms">Minterms (comma separated):</Label>
+                {inputMethod === 'expression' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="space-y-3 p-4 glass rounded-lg border border-primary/20"
+                  >
+                    <Label htmlFor="expression" className="text-sm font-semibold">Boolean Expression:</Label>
+                    <Textarea
+                      id="expression"
+                      value={booleanExpression}
+                      onChange={(e) => setBooleanExpression(e.target.value)}
+                      placeholder="e.g., A'B'C + AB'D' + ABC"
+                      className="glass font-mono text-sm min-h-[80px] resize-none"
+                      rows={3}
+                    />
+                    <div className="text-xs text-muted-foreground space-y-1 bg-muted/20 p-3 rounded">
+                      <p className="font-semibold">Syntax:</p>
+                      <p>• Use <code className="bg-background px-1 rounded">'</code> for NOT</p>
+                      <p>• Use <code className="bg-background px-1 rounded">+</code> for OR</p>
+                      <p>• Use <code className="bg-background px-1 rounded">*</code> for AND (optional)</p>
+                    </div>
+                    <Button onClick={applyBooleanExpression} size="lg" className="w-full h-11 font-semibold">
+                      Parse & Apply Expression
+                    </Button>
+                  </motion.div>
+                )}
+
+                {inputMethod === 'truthtable' && (
+                  <div className="space-y-2">
+                    <Label>Truth Table Input:</Label>
+                    <div className="text-sm text-muted-foreground">
+                      Use the truth table below to input values, or click cells in the K-map grid.
+                    </div>
+                  </div>
+                )}
+
+                {inputMethod === 'minterm' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="space-y-3 p-4 glass rounded-lg border border-primary/20"
+                  >
+                    <Label htmlFor="minterms" className="text-sm font-semibold">Minterms (comma separated):</Label>
+                    <Input
+                      id="minterms"
+                      value={minterms}
+                      onChange={(e) => setMinterms(e.target.value)}
+                      placeholder="e.g., 0, 1, 3, 7, 11, 15"
+                      className="glass h-11 font-mono"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Enter decimal numbers representing positions where output is 1
+                    </p>
+                    <Button onClick={applyMinterms} size="lg" className="w-full h-11 font-semibold">
+                      Apply Minterms
+                    </Button>
+                  </motion.div>
+                )}
+
+                {inputMethod === 'maxterm' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="space-y-3 p-4 glass rounded-lg border border-primary/20"
+                  >
+                    <Label htmlFor="maxterms" className="text-sm font-semibold">Maxterms (comma separated):</Label>
+                    <Input
+                      id="maxterms"
+                      value={maxterms}
+                      onChange={(e) => setMaxterms(e.target.value)}
+                      placeholder="e.g., 2, 4, 5, 6, 12, 13"
+                      className="glass h-11 font-mono"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Enter decimal numbers representing positions where output is 0
+                    </p>
+                    <Button onClick={applyMaxterms} size="lg" className="w-full h-11 font-semibold">
+                      Apply Maxterms
+                    </Button>
+                  </motion.div>
+                )}
+
+                <div className="space-y-3 p-4 glass rounded-lg border border-accent/20 bg-accent/5">
+                  <Label htmlFor="dontcares" className="text-sm font-semibold flex items-center gap-2">
+                    <span className="text-accent">✨</span> Don't Cares (Optional)
+                  </Label>
                   <Input
-                    id="minterms"
-                    value={minterms}
-                    onChange={(e) => setMinterms(e.target.value)}
-                    placeholder="0, 1, 3, 7"
-                    className="glass"
+                    id="dontcares"
+                    value={dontCares}
+                    onChange={(e) => setDontCares(e.target.value)}
+                    placeholder="e.g., 8, 9, 10, 15"
+                    className="glass h-11 font-mono"
                   />
-                  <Button onClick={applyMinterms} size="sm" className="w-full">
-                    Apply Minterms
-                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Positions where output doesn't matter (helps create larger groups)
+                  </p>
                 </div>
-              )}
 
-              {inputMethod === 'maxterm' && (
-                <div className="space-y-2">
-                  <Label htmlFor="maxterms">Maxterms (comma separated):</Label>
-                  <Input
-                    id="maxterms"
-                    value={maxterms}
-                    onChange={(e) => setMaxterms(e.target.value)}
-                    placeholder="2, 4, 5, 6"
-                    className="glass"
-                  />
-                  <Button onClick={applyMaxterms} size="sm" className="w-full">
-                    Apply Maxterms
-                  </Button>
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold text-foreground">Simplification Method:</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant={simplificationMethod === 'SOP' ? 'default' : 'outline'}
+                      onClick={() => setSimplificationMethod('SOP')}
+                      size="lg"
+                      className="h-12 font-semibold transition-all duration-200"
+                    >
+                      SOP
+                    </Button>
+                    <Button
+                      variant={simplificationMethod === 'POS' ? 'default' : 'outline'}
+                      onClick={() => setSimplificationMethod('POS')}
+                      size="lg"
+                      className="h-12 font-semibold transition-all duration-200"
+                    >
+                      POS
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground text-center">
+                    {simplificationMethod === 'SOP' ? 'Sum of Products' : 'Product of Sums'}
+                  </p>
                 </div>
-              )}
+              </CardContent>
+            </Card>
+          </motion.div>
 
-              <div className="space-y-2">
-                <Label htmlFor="dontcares">Don't Cares (optional):</Label>
-                <Input
-                  id="dontcares"
-                  value={dontCares}
-                  onChange={(e) => setDontCares(e.target.value)}
-                  placeholder="8, 9, 15"
-                  className="glass"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Simplification Method:</Label>
-                <div className="flex gap-2">
-                  <Button
-                    variant={simplificationMethod === 'SOP' ? 'default' : 'outline'}
-                    onClick={() => setSimplificationMethod('SOP')}
-                    size="sm"
-                  >
-                    SOP
-                  </Button>
-                  <Button
-                    variant={simplificationMethod === 'POS' ? 'default' : 'outline'}
-                    onClick={() => setSimplificationMethod('POS')}
-                    size="sm"
-                  >
-                    POS
-                  </Button>
+          {/* K-Map Interactive Grid - Enhanced */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="xl:col-span-5 lg:col-span-1"
+          >
+            <Card className="glass-strong border-primary/30 shadow-xl hover:shadow-2xl transition-shadow duration-300 h-full">
+              <CardHeader className="border-b border-border/50 pb-4">
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <div className="p-2 rounded-lg bg-primary/20">
+                    <Grid3x3 className="w-5 h-5 text-primary" />
+                  </div>
+                  K-Map Grid
+                </CardTitle>
+                <CardDescription>
+                  Click cells to cycle: 0 → 1 → X → 0
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-5 pt-5 pb-6">
+                {/* Variable Selector */}
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold text-foreground">Number of Variables:</Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <Button
+                      variant={variables === 2 ? "default" : "outline"}
+                      onClick={() => handleVariableChange(2)}
+                      size="lg"
+                      className="h-12 font-semibold transition-all duration-200"
+                    >
+                      2 Vars
+                    </Button>
+                    <Button
+                      variant={variables === 3 ? "default" : "outline"}
+                      onClick={() => handleVariableChange(3)}
+                      size="lg"
+                      className="h-12 font-semibold transition-all duration-200"
+                    >
+                      3 Vars
+                    </Button>
+                    <Button
+                      variant={variables === 4 ? "default" : "outline"}
+                      onClick={() => handleVariableChange(4)}
+                      size="lg"
+                      className="h-12 font-semibold transition-all duration-200"
+                    >
+                      4 Vars
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground text-center mt-2">
+                    {variables === 2 ? 'Variables: A, B' :
+                      variables === 3 ? 'Variables: A, B, C' :
+                        'Variables: A, B, C, D'}
+                  </p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
 
-          {/* K-Map Interactive Grid */}
-          <Card className="glass-strong border-primary/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Grid3x3 className="w-5 h-5 text-primary" />
-                K-Map Grid
-              </CardTitle>
-              <CardDescription>
-                Click cells to cycle: 0 → 1 → X (don't care) → 0
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Variable Selector */}
-              <div className="flex gap-2">
-                <Button
-                  variant={variables === 2 ? "default" : "outline"}
-                  onClick={() => handleVariableChange(2)}
-                  size="sm"
-                >
-                  2 Variables
-                </Button>
-                <Button
-                  variant={variables === 3 ? "default" : "outline"}
-                  onClick={() => handleVariableChange(3)}
-                  size="sm"
-                >
-                  3 Variables
-                </Button>
-                <Button
-                  variant={variables === 4 ? "default" : "outline"}
-                  onClick={() => handleVariableChange(4)}
-                  size="sm"
-                >
-                  4 Variables
-                </Button>
-                <Button
-                  variant="ghost"
-                  onClick={resetMap}
-                  size="sm"
-                  className="ml-auto"
-                >
-                  <RotateCcw className="w-4 h-4 mr-1" />
-                  Reset
-                </Button>
-              </div>
+                {/* Quick Actions */}
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold text-foreground">Quick Actions:</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={fillAllWithZero}
+                      size="default"
+                      className="h-11 hover:bg-destructive/10 hover:border-destructive/50 transition-all duration-200"
+                    >
+                      <RotateCcw className="w-4 h-4 mr-2" />
+                      Clear All
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={fillAllWithOne}
+                      size="default"
+                      className="h-11 hover:bg-primary/10 hover:border-primary/50 transition-all duration-200"
+                    >
+                      <Zap className="w-4 h-4 mr-2" />
+                      Fill with 1
+                    </Button>
+                  </div>
+                </div>
 
-              {/* K-Map Grid */}
-              <div className="overflow-x-auto">
-                <div className="inline-block min-w-full">
-                  <table className="w-full border-collapse">
-                    <thead>
-                      <tr>
-                        <th className="p-2 text-sm font-medium text-muted-foreground"></th>
-                        <th
-                          colSpan={colLabels.length}
-                          className="p-2 text-sm font-medium text-primary border-b border-border"
-                        >
-                          {labels.col}
-                        </th>
-                      </tr>
-                      <tr>
-                        <th className="p-2 text-sm font-medium text-primary border-r border-border">
-                          {labels.row}
-                        </th>
-                        {colLabels.map((label, i) => (
+                {/* K-Map Grid */}
+                <div className="overflow-x-auto rounded-lg border border-border/50 bg-background/50 p-3 sm:p-4">
+                  <div className="inline-block min-w-full">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr>
+                          <th className="p-2 sm:p-3 text-sm font-medium text-muted-foreground"></th>
                           <th
-                            key={i}
-                            className="p-2 text-xs font-mono text-muted-foreground border-b border-border"
+                            colSpan={colLabels.length}
+                            className="p-2 sm:p-3 text-sm sm:text-base font-bold text-primary border-b-2 border-primary/30"
                           >
-                            {label}
+                            {labels.col}
                           </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cells.map((row, i) => (
-                        <tr key={i}>
-                          <td className="p-2 text-xs font-mono text-muted-foreground text-center border-r border-border">
-                            {rowLabels[i]}
-                          </td>
-                          {row.map((cell, j) => (
-                            <td key={j} className="p-0 relative">
-                              <button
-                                onClick={() => toggleCell(i, j)}
-                                className={`w-full h-16 border border-border transition-all duration-200 font-bold text-lg relative ${cell === 1
-                                  ? "bg-primary text-primary-foreground glow-cyan"
-                                  : cell === 'X'
-                                    ? "bg-accent text-accent-foreground"
-                                    : "bg-muted/20 text-muted-foreground hover:bg-muted/40"
-                                  }`}
-                              >
-                                {cell}
-                                {/* Group overlay */}
-                                {groups.map((group, groupIndex) => {
-                                  const inGroup = group.cells.some(([r, c]) => r === i && c === j);
-                                  return inGroup ? (
-                                    <div
-                                      key={groupIndex}
-                                      className={`absolute inset-0 border-2 border-red-500 ${group.color} pointer-events-none`}
-                                      style={{ zIndex: groupIndex + 1 }}
-                                    />
-                                  ) : null;
-                                })}
-                              </button>
-                            </td>
+                        </tr>
+                        <tr>
+                          <th className="p-2 sm:p-3 text-sm sm:text-base font-bold text-primary border-r-2 border-primary/30">
+                            {labels.row}
+                          </th>
+                          {colLabels.map((label, i) => (
+                            <th
+                              key={i}
+                              className="p-1.5 sm:p-2 text-xs sm:text-sm font-mono text-muted-foreground border-b border-border"
+                            >
+                              {label}
+                            </th>
                           ))}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+                      </thead>
+                      <tbody>
+                        {cells.map((row, i) => (
+                          <tr key={i}>
+                            <td className="p-1.5 sm:p-2 text-xs sm:text-sm font-mono text-muted-foreground text-center border-r border-border font-semibold">
+                              {rowLabels[i]}
+                            </td>
+                            {row.map((cell, j) => {
+                              // Find all groups this cell belongs to
+                              const cellGroups = groups.filter(group =>
+                                group.cells.some(([r, c]) => r === i && c === j)
+                              );
 
-          {/* Results and Analysis */}
-          <div className="space-y-6">
-            {/* Results Card */}
-            <Card className="glass border-secondary/30">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calculator className="w-5 h-5 text-secondary" />
-                  Simplified Results
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label className="text-sm text-muted-foreground block mb-2">
-                    Sum of Products (SOP):
-                  </Label>
-                  <div className="glass p-4 rounded-lg">
-                    <code className="text-sm text-foreground font-mono">
-                      F = {getSimplifiedExpression().sop}
-                    </code>
+                              return (
+                                <td key={j} className="p-0.5 relative">
+                                  <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => toggleCell(i, j)}
+                                    className={`w-full aspect-square min-h-[60px] sm:min-h-[70px] md:min-h-[80px] border-2 transition-all duration-300 font-bold text-lg sm:text-xl relative rounded-md overflow-hidden ${cell === 1
+                                      ? "bg-gradient-to-br from-primary to-primary/80 text-primary-foreground border-primary shadow-lg shadow-primary/30"
+                                      : cell === 'X'
+                                        ? "bg-gradient-to-br from-accent to-accent/80 text-accent-foreground border-accent shadow-lg shadow-accent/30"
+                                        : "bg-muted/30 text-muted-foreground hover:bg-muted/50 border-border hover:border-primary/50"
+                                      }`}
+                                  >
+                                    {/* Cell value */}
+                                    <span className="relative z-20">{cell}</span>
+
+                                    {/* Group overlays - enhanced visibility */}
+                                    {cellGroups.map((group, idx) => {
+                                      const isFirstCell = group.cells[0][0] === i && group.cells[0][1] === j;
+                                      return (
+                                        <motion.div
+                                          key={idx}
+                                          initial={{ opacity: 0, scale: 0.9 }}
+                                          animate={{ opacity: 1, scale: 1 }}
+                                          transition={{ duration: 0.3, delay: idx * 0.05 }}
+                                          className={`absolute inset-0 border-[5px] ${group.borderColor} ${group.bgColor} pointer-events-none`}
+                                          style={{
+                                            zIndex: 10 + idx,
+                                            borderStyle: 'dashed',
+                                            borderRadius: '6px',
+                                            margin: `${idx * 3}px`
+                                          }}
+                                        >
+                                          {/* Group number badge - show on first cell of group */}
+                                          {isFirstCell && (
+                                            <motion.div
+                                              initial={{ scale: 0 }}
+                                              animate={{ scale: 1 }}
+                                              transition={{ duration: 0.3, delay: 0.2 + idx * 0.05 }}
+                                              className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${group.borderColor.replace('border-', 'bg-')} text-white font-bold text-xs flex items-center justify-center shadow-lg z-30`}
+                                            >
+                                              {group.index}
+                                            </motion.div>
+                                          )}
+                                        </motion.div>
+                                      );
+                                    })}
+                                  </motion.button>
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
 
-                <div>
-                  <Label className="text-sm text-muted-foreground block mb-2">
-                    Product of Sums (POS):
-                  </Label>
-                  <div className="glass p-4 rounded-lg">
-                    <code className="text-sm text-foreground font-mono">
-                      F = {getSimplifiedExpression().pos}
-                    </code>
-                  </div>
-                </div>
-
-                <div>
-                  <Label className="text-sm text-muted-foreground block mb-2">
-                    Minterms: Σ({generateMinterms().join(', ')})
-                  </Label>
-                  <Label className="text-sm text-muted-foreground block mb-2">
-                    Maxterms: Π({generateMaxterms().join(', ')})
-                  </Label>
-                  {generateDontCares().length > 0 && (
-                    <Label className="text-sm text-muted-foreground block mb-2">
-                      Don't Cares: d({generateDontCares().join(', ')})
+                {/* Group Legend - Visual indicator of all groups */}
+                {groups.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    className="rounded-lg border border-border/50 bg-background/50 p-4"
+                  >
+                    <Label className="text-sm font-semibold text-foreground mb-3 block">
+                      Group Legend ({groups.length} {groups.length === 1 ? 'group' : 'groups'}):
                     </Label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {groups.map((group, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
+                          className={`flex items-center gap-3 p-2 rounded-lg border-2 ${group.borderColor} ${group.bgColor} transition-all duration-200 hover:shadow-md`}
+                        >
+                          {/* Group number badge */}
+                          <div className={`w-7 h-7 rounded-full ${group.borderColor.replace('border-', 'bg-')} text-white font-bold text-sm flex items-center justify-center shadow-md flex-shrink-0`}>
+                            {group.index}
+                          </div>
+                          {/* Group term */}
+                          <div className="flex-1 min-w-0">
+                            <code className="text-sm font-mono font-semibold text-foreground truncate block">
+                              {group.term}
+                            </code>
+                            <span className="text-xs text-muted-foreground">
+                              {group.cells.length} {group.cells.length === 1 ? 'cell' : 'cells'}
+                            </span>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Results and Analysis - Enhanced */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="xl:col-span-4 lg:col-span-1 space-y-6"
+          >
+            {/* Results Card */}
+            <Card className="glass border-secondary/30 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+              <CardHeader className="border-b border-border/50 pb-4">
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <div className="p-2 rounded-lg bg-secondary/20">
+                    <Calculator className="w-5 h-5 text-secondary" />
+                  </div>
+                  Simplified Result
+                </CardTitle>
+                <CardDescription>
+                  Optimized Boolean expressions
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 pt-5 pb-6">
+                <Tabs defaultValue="sop" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="sop">SOP Form</TabsTrigger>
+                    <TabsTrigger value="pos">POS Form</TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value="sop" className="space-y-4 mt-4">
+                    <div>
+                      <Label className="text-sm text-muted-foreground block mb-2">
+                        Simplified Boolean Expression
+                      </Label>
+                      <div className="glass p-4 rounded-lg border-2 border-primary/30">
+                        <code className="text-lg text-primary font-mono font-bold">
+                          {getSimplifiedExpression().sop}
+                        </code>
+                      </div>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="pos" className="space-y-4 mt-4">
+                    <div>
+                      <Label className="text-sm text-muted-foreground block mb-2">
+                        Product of Sums Expression
+                      </Label>
+                      <div className="glass p-4 rounded-lg border-2 border-secondary/30">
+                        <code className="text-lg text-secondary font-mono font-bold">
+                          {getSimplifiedExpression().pos}
+                        </code>
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+
+                <div className="space-y-2 pt-4 border-t border-border">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Minterms:</span>
+                    <span className="font-mono">Σ({generateMinterms().join(', ')})</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Maxterms:</span>
+                    <span className="font-mono">Π({generateMaxterms().join(', ')})</span>
+                  </div>
+                  {generateDontCares().length > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Don't Cares:</span>
+                      <span className="font-mono">d({generateDontCares().join(', ')})</span>
+                    </div>
                   )}
                 </div>
 
-                <Button
-                  variant="outline"
-                  onClick={() => setShowSteps(!showSteps)}
-                  className="w-full"
-                >
-                  {showSteps ? 'Hide' : 'Show'} Steps
-                </Button>
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowSteps(!showSteps)}
+                    className="flex-1"
+                    size="sm"
+                  >
+                    <Lightbulb className="w-4 h-4 mr-2" />
+                    {showSteps ? 'Hide' : 'Show'} Steps
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={downloadPDF}
+                    className="flex-1"
+                    size="sm"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download PDF
+                  </Button>
+                </div>
 
                 {showSteps && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
-                    className="space-y-2"
+                    className="space-y-2 pt-4 border-t border-border"
                   >
                     <Label className="text-sm font-semibold">Solution Steps:</Label>
                     <div className="glass p-3 rounded-lg space-y-1">
@@ -713,24 +931,58 @@ const KarnaughMaps = () => {
 
             {/* Groups Visualization */}
             {groups.length > 0 && (
-              <Card className="glass border-accent/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-accent" />
+              <Card className="glass border-accent/30 shadow-lg">
+                <CardHeader className="border-b border-border/50 pb-4">
+                  <CardTitle className="flex items-center gap-3 text-xl">
+                    <div className="p-2 rounded-lg bg-accent/20">
+                      <Zap className="w-5 h-5 text-accent" />
+                    </div>
                     Identified Groups
                   </CardTitle>
+                  <CardDescription>
+                    {groups.length} group{groups.length !== 1 ? 's' : ''} found for optimal simplification
+                  </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    {groups.map((group, i) => (
-                      <div key={i} className="flex items-center gap-2 p-2 glass rounded">
-                        <div className={`w-4 h-4 rounded ${group.color} border`} />
-                        <span className="text-sm font-mono">{group.term}</span>
-                        <span className="text-xs text-muted-foreground">
-                          ({group.cells.length} cells)
-                        </span>
-                      </div>
-                    ))}
+                <CardContent className="pt-6">
+                  <div className="space-y-4">
+                    {groups.map((group, i) => {
+                      const groupMinterms = group.cells.map(([r, c]) =>
+                        getDecimalFromPosition(r, c, variables)
+                      ).sort((a, b) => a - b);
+
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.1 }}
+                          className={`p-4 rounded-xl border-2 ${group.borderColor} ${group.bgColor} hover:shadow-lg transition-all duration-300 space-y-3`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`w-9 h-9 rounded-full ${group.borderColor.replace('border-', 'bg-')} text-white flex items-center justify-center font-bold shadow-md`}>
+                              {group.index}
+                            </div>
+                            <span className="text-sm font-semibold text-foreground">
+                              Group {group.index} • {group.cells.length} cell{group.cells.length > 1 ? 's' : ''}
+                            </span>
+                          </div>
+                          <div className="space-y-2 text-sm ml-12">
+                            <div className="flex items-start justify-between gap-2">
+                              <span className="text-muted-foreground min-w-[80px]">Term:</span>
+                              <code className="font-mono text-primary font-bold text-base bg-primary/10 px-2 py-1 rounded">
+                                {group.term}
+                              </code>
+                            </div>
+                            <div className="flex items-start justify-between gap-2">
+                              <span className="text-muted-foreground min-w-[80px]">Minterms:</span>
+                              <span className="font-mono text-xs bg-muted/30 px-2 py-1 rounded">
+                                ({groupMinterms.join(', ')})
+                              </span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>
@@ -777,54 +1029,92 @@ const KarnaughMaps = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
 
         {/* Truth Table and Logic Diagram */}
-        <div className="grid md:grid-cols-2 gap-6 mt-8 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 mt-8 max-w-[1600px] mx-auto">
           <Card className="glass-strong border-primary/30">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-primary" />
                 Truth Table
               </CardTitle>
+              <CardDescription>
+                Complete truth table for {variables} variables
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="p-2 text-left">Row</th>
-                      {(variables === 2 ? ['A', 'B'] :
-                        variables === 3 ? ['A', 'B', 'C'] :
-                          ['A', 'B', 'C', 'D']).map(v => (
-                            <th key={v} className="p-2 text-center">{v}</th>
-                          ))}
-                      <th className="p-2 text-center">F</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Array.from({ length: Math.pow(2, variables) }, (_, i) => {
-                      const binary = i.toString(2).padStart(variables, '0');
-                      const { row, col } = getKMapPosition(i, variables);
-                      const output = cells[row] ? cells[row][col] : 0;
+              <div className="space-y-4">
+                <div className="overflow-x-auto max-h-96 overflow-y-auto">
+                  <table className="w-full text-sm border-collapse">
+                    <thead className="sticky top-0 bg-background/95 backdrop-blur">
+                      <tr className="border-b-2 border-border">
+                        <th className="p-2 text-left font-semibold">#</th>
+                        {(variables === 2 ? ['A', 'B'] :
+                          variables === 3 ? ['A', 'B', 'C'] :
+                            ['A', 'B', 'C', 'D']).map(v => (
+                              <th key={v} className="p-2 text-center font-semibold">{v}</th>
+                            ))}
+                        <th className="p-2 text-center font-semibold text-primary">F</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Array.from({ length: Math.pow(2, variables) }, (_, i) => {
+                        const binary = i.toString(2).padStart(variables, '0');
+                        const { row, col } = getKMapPosition(i, variables);
+                        const output = cells[row] ? cells[row][col] : 0;
+                        const isMinterms = output === 1;
+                        const isMaxterms = output === 0;
+                        const isDontCare = output === 'X';
 
-                      return (
-                        <tr key={i} className="border-b border-border/50">
-                          <td className="p-2 text-muted-foreground">{i}</td>
-                          {binary.split('').map((bit, j) => (
-                            <td key={j} className="p-2 text-center font-mono">{bit}</td>
-                          ))}
-                          <td className={`p-2 text-center font-mono font-bold ${output === 1 ? 'text-primary' :
-                            output === 'X' ? 'text-accent' : 'text-muted-foreground'
-                            }`}>
-                            {output}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                        return (
+                          <tr
+                            key={i}
+                            className={`border-b border-border/50 transition-colors ${isMinterms ? 'bg-primary/10 hover:bg-primary/20' :
+                              isDontCare ? 'bg-accent/10 hover:bg-accent/20' :
+                                'hover:bg-muted/50'
+                              }`}
+                          >
+                            <td className="p-2 text-muted-foreground font-mono text-xs">{i}</td>
+                            {binary.split('').map((bit, j) => (
+                              <td key={j} className="p-2 text-center font-mono">{bit}</td>
+                            ))}
+                            <td className={`p-2 text-center font-mono font-bold ${output === 1 ? 'text-primary' :
+                              output === 'X' ? 'text-accent' :
+                                'text-muted-foreground'
+                              }`}>
+                              {output}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Summary */}
+                <div className="glass p-3 rounded-lg border border-primary/20">
+                  <div className="text-xs font-semibold mb-2">Summary:</div>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Total rows:</span>
+                      <span className="font-semibold">{Math.pow(2, variables)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Minterms:</span>
+                      <span className="font-semibold text-primary">{generateMinterms().length}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Maxterms:</span>
+                      <span className="font-semibold">{generateMaxterms().length}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Don't Cares:</span>
+                      <span className="font-semibold text-accent">{generateDontCares().length}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -835,32 +1125,78 @@ const KarnaughMaps = () => {
                 <Zap className="w-5 h-5 text-secondary" />
                 Logic Circuit
               </CardTitle>
+              <CardDescription>
+                Circuit implementation of the simplified expression
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="text-sm text-muted-foreground">
-                  <strong>SOP Implementation:</strong>
-                </div>
-                <div className="glass p-4 rounded-lg font-mono text-sm">
-                  {getSimplifiedExpression().sop}
-                </div>
-
-                <div className="text-sm text-muted-foreground">
-                  <strong>Circuit Description:</strong>
-                </div>
-                <div className="text-sm space-y-2">
-                  <p>• Each product term requires an AND gate</p>
-                  <p>• Final output uses an OR gate to combine terms</p>
-                  <p>• Inverted variables use NOT gates</p>
-                  <p>• Total gates needed: {groups.length > 1 ? `${groups.length} AND + 1 OR` : '1 gate'}</p>
+                <div className="glass p-4 rounded-lg border-2 border-secondary/20">
+                  <div className="text-sm font-semibold mb-3 text-secondary">
+                    {simplificationMethod} Implementation:
+                  </div>
+                  <div className="font-mono text-sm bg-background/50 p-3 rounded border border-border">
+                    {getSimplifiedExpression().sop}
+                  </div>
                 </div>
 
-                <div className="glass p-4 rounded-lg">
-                  <div className="text-xs text-muted-foreground mb-2">Cost Analysis:</div>
-                  <div className="text-sm">
-                    <div>Gates: {groups.length > 1 ? groups.length + 1 : 1}</div>
-                    <div>Literals: {groups.reduce((sum, group) => sum + group.term.length, 0)}</div>
-                    <div>Levels: {groups.length > 1 ? 2 : 1}</div>
+                <div className="space-y-3">
+                  <div className="text-sm font-semibold">Circuit Description:</div>
+                  <div className="glass p-3 rounded-lg space-y-2 text-sm">
+                    <div className="flex items-start gap-2">
+                      <span className="text-primary font-bold">•</span>
+                      <span>Each product term requires an AND gate</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-primary font-bold">•</span>
+                      <span>Final output uses an OR gate to combine all product terms</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-primary font-bold">•</span>
+                      <span>Complemented variables use NOT gates</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-primary font-bold">•</span>
+                      <span>Total gates needed: <span className="text-accent font-semibold">
+                        {groups.length > 1 ? `${groups.length} AND + 1 OR` : groups.length === 1 ? '1 AND gate' : '0 gates'}
+                      </span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="glass p-4 rounded-lg border border-accent/30">
+                  <div className="text-xs font-semibold text-accent mb-3">Cost Analysis:</div>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Gates:</span>
+                      <span className="font-semibold">{groups.length > 1 ? groups.length + 1 : groups.length}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Literals:</span>
+                      <span className="font-semibold">
+                        {groups.reduce((sum, group) => {
+                          // Count literals (characters that aren't + or spaces)
+                          return sum + group.term.replace(/[+\s]/g, '').length;
+                        }, 0)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Levels:</span>
+                      <span className="font-semibold">{groups.length > 1 ? 2 : 1}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Terms:</span>
+                      <span className="font-semibold">{groups.length}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="glass p-3 rounded-lg bg-primary/5 border border-primary/20">
+                  <div className="text-xs font-semibold mb-2">Circuit Notation:</div>
+                  <div className="text-xs space-y-1 text-muted-foreground">
+                    <div>• A' or A̅ represents NOT A (complement)</div>
+                    <div>• AB represents A AND B</div>
+                    <div>• A + B represents A OR B</div>
                   </div>
                 </div>
               </div>
@@ -869,7 +1205,7 @@ const KarnaughMaps = () => {
         </div>
 
         {/* Examples Section */}
-        <Card className="glass-strong border-primary/20 mt-8 max-w-7xl mx-auto">
+        <Card className="glass-strong border-primary/20 mt-8 max-w-[1600px] mx-auto">
           <CardHeader>
             <CardTitle>Understanding K-Maps</CardTitle>
             <CardDescription>

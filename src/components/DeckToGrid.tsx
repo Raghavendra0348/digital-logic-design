@@ -8,6 +8,9 @@ import {
   Cpu,
   Shield,
   LucideIcon,
+  Calculator,
+  Clock,
+  Layers,
 } from "lucide-react";
 import { NavigationCard } from "@/components/NavigationCard";
 
@@ -263,20 +266,21 @@ export const DeckToGrid = () => {
     to: string;
     color: "cyan" | "blue" | "purple" | "green";
   }> = [
-      {
+    {
         title: "Hamming Encoder",
         description: "Error detection and correction visualization",
         icon: Shield,
         to: "/hamming-code",
-        color: "cyan",
+        color: "green",
       },
       {
         title: "Hamming Decoder",
         description: "Detect and correct errors interactively",
-        icon: Zap,
+        icon: Shield,
         to: "/hamming-decoder",
-        color: "blue",
-      },
+        color: "cyan",
+      }
+      ,
       {
         title: "K-Map Solver",
         description: "Karnaugh Map simplification and optimization",
@@ -284,11 +288,41 @@ export const DeckToGrid = () => {
         to: "/karnaugh-maps",
         color: "purple",
       },
+      
+      {
+        title: "Number Systems",
+        description: "Binary, Decimal, Octal & Hex conversions",
+        icon: Binary,
+        to: "/number-systems",
+        color: "cyan",
+      },
       {
         title: "Combinational Circuits",
-        description: "Adders, multiplexers & circuit minimization",
+        description: "Encoders, decoders & multiplexers",
         icon: CircuitBoard,
         to: "/combinational",
+        color: "green",
+      },
+      {
+        title: "Sequential Circuits",
+        description: "Flip-flops, latches & timing diagrams",
+        icon: Cpu,
+        to: "/sequential",
+        color: "cyan",
+      },
+      {
+        title: "Counter Design",
+        description: "Synchronous & asynchronous counter circuits",
+        icon: Layers,
+        to: "/counter-design",
+        color: "blue",
+      },
+      
+      {
+        title: "Arithmetic Circuits",
+        description: "Adders, subtractors & multiplier design",
+        icon: Calculator,
+        to: "/arithmetic-circuits",
         color: "purple",
       },
       {
@@ -299,25 +333,19 @@ export const DeckToGrid = () => {
         color: "blue",
       },
       {
-        title: "Number Systems",
-        description: "Binary, Decimal, Octal & Hex conversions",
-        icon: Binary,
-        to: "/number-systems",
-        color: "cyan",
+        title: "Digital Clock Project",
+        description: "Complete clock with BCD counters & display",
+        icon: Clock,
+        to: "/digital-clock",
+        color: "purple",
       },
+      
       {
         title: "Learn Mode",
         description: "Interactive tutorials and guided theory",
         icon: BookOpen,
         to: "/learn",
         color: "blue",
-      },
-      {
-        title: "Sequential Circuits",
-        description: "Flip-flops, latches & timing diagrams",
-        icon: Cpu,
-        to: "/sequential",
-        color: "green",
       },
     ];
 

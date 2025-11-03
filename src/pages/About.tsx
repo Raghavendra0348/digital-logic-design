@@ -13,7 +13,7 @@ const About = () => {
           <div className="flex items-center gap-3 mb-8">
             <Users className="w-10 h-10 text-secondary" />
             <h1 className="font-display text-4xl md:text-5xl font-bold text-glow-blue">
-              About Logic Glow
+              About Digital Logic & Design
             </h1>
           </div>
 
@@ -21,10 +21,10 @@ const About = () => {
             <section>
               <h2 className="text-2xl font-bold text-secondary mb-4">Who We Are</h2>
               <p className="leading-relaxed">
-                Welcome to <strong>Logic Glow</strong> – your comprehensive educational platform for mastering digital logic design. We are a dedicated team of engineers, educators, and technology enthusiasts passionate about making complex digital systems accessible and engaging for learners worldwide.
+                Welcome to <strong>Digital Logic & Design</strong> – your comprehensive educational platform for mastering digital logic design. We are a dedicated team of engineers, educators, and technology enthusiasts passionate about making complex digital systems accessible and engaging for learners worldwide.
               </p>
               <p className="leading-relaxed mt-3">
-                Founded in 2025, Logic Glow was created to bridge the gap between theoretical concepts and practical application in digital electronics and computer architecture. Our mission is to empower students, hobbyists, and professionals with interactive tools and high-quality educational content.
+                Founded in 2025, Digital Logic & Design was created to bridge the gap between theoretical concepts and practical application in digital electronics and computer architecture. Our mission is to empower students, hobbyists, and professionals with interactive tools and high-quality educational content.
               </p>
             </section>
 
@@ -77,7 +77,7 @@ const About = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-secondary mb-4">Why Choose Logic Glow?</h2>
+              <h2 className="text-2xl font-bold text-secondary mb-4">Why Choose Digital Logic & Design?</h2>
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="text-center p-4 glass rounded-lg border border-accent/20">
                   <h3 className="font-bold text-lg mb-2">100% Free</h3>
@@ -97,7 +97,7 @@ const About = () => {
             <section>
               <h2 className="text-2xl font-bold text-secondary mb-4">Our Commitment</h2>
               <p className="leading-relaxed">
-                At Logic Glow, we are committed to:
+                At Digital Logic & Design, we are committed to:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4 mt-3">
                 <li><strong>Quality Education:</strong> Providing accurate, well-researched content reviewed by experts</li>
@@ -152,7 +152,7 @@ const About = () => {
 
             <section className="text-center">
               <p className="text-lg font-semibold text-primary">
-                Thank you for choosing Logic Glow as your digital logic learning companion!
+                Thank you for choosing Digital Logic & Design as your digital logic learning companion!
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 Together, let's illuminate the path to mastering digital design.

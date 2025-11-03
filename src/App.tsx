@@ -21,6 +21,9 @@ import HammingCode from "./pages/HammingCode";
 import HammingDecoder from "./pages/HammingDecoder";
 import KarnaughMaps from "./pages/KarnaughMaps";
 import Learn from "./pages/Learn";
+import CounterDesign from "./pages/CounterDesign";
+import DigitalClock from "./pages/DigitalClock";
+import ArithmeticCircuits from "./pages/ArithmeticCircuits";
 
 import FAQ from "./pages/FAQ";
 import HammingCodeArticle from "./pages/blog/HammingCodeArticle";
@@ -55,6 +58,9 @@ const App = () => (
           <Route path="/sequential" element={<Sequential />} />
           <Route path="/karnaugh-maps" element={<KarnaughMaps />} />
           <Route path="/learn" element={<Learn />} />
+          <Route path="/counter-design" element={<CounterDesign />} />
+          <Route path="/digital-clock" element={<DigitalClock />} />
+          <Route path="/arithmetic-circuits" element={<ArithmeticCircuits />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/blog/understanding-hamming-code" element={<HammingCodeArticle />} />
           <Route path="/blog/boolean-algebra-fundamentals" element={<BooleanAlgebraArticle />} />

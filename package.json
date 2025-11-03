@@ -1,8 +1,9 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "digital-logic-and-design",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
+  "description": "Interactive Digital Logic Design & Circuit Simulation Platform",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
