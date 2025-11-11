@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { NavigationCard } from "@/components/NavigationCard";
 import { CircuitBackground } from "@/components/CircuitBackground";
 import heroImage from "@/assets/hero-circuit.jpg";
-import { DeckToGrid } from "@/components/DeckToGrid";
+import {  DeckToGrid } from "@/components/DeckToGrid";
 
 const Index = () => {
   return (
     <div className="min-h-screen relative">
       <CircuitBackground />
-
+      
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Hero Background Image with Overlay */}
-        <div
+        <div 
           className="absolute inset-0 z-0"
           style={{
             backgroundImage: `url(${heroImage})`,
@@ -35,7 +35,7 @@ const Index = () => {
             {/* Animated Title */}
             <motion.div
               className="mb-6"
-              animate={{
+              animate={{ 
                 textShadow: [
                   "0 0 20px hsl(var(--glow-cyan) / 0.5)",
                   "0 0 40px hsl(var(--glow-cyan) / 0.8)",
@@ -126,11 +126,11 @@ const Index = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-
+           
           </motion.div>
 
-          <DeckToGrid />
-
+           <DeckToGrid />
+        
         </div>
       </section>
 

@@ -213,7 +213,7 @@ const Learn = () => {
   return (
     <div className="min-h-screen relative">
       <CircuitBackground />
-
+      
       <div className="container mx-auto px-4 py-8 relative z-10">
         {/* Header */}
         <motion.div
@@ -227,7 +227,7 @@ const Learn = () => {
               Back to Home
             </Link>
           </Button>
-
+          
           <div className="flex items-center gap-4 mb-4">
             <BookOpen className="w-12 h-12 text-primary" />
             <h1 className="font-display text-4xl md:text-6xl font-bold text-glow-cyan">

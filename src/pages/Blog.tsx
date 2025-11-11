@@ -148,7 +148,7 @@ const Blog = () => {
               "@type": "Blog",
               "name": "Digital Logic & Design Learning Blog",
               "description": "Educational articles and tutorials on digital logic design",
-              "url": "https://logicglow.com/blog",
+              "url": "https://digital-logic-design.vercel.app/blog",
               "blogPost": blogPosts.map(post => ({
                 "@type": "BlogPosting",
                 "headline": post.title,
@@ -158,7 +158,7 @@ const Blog = () => {
                   "name": post.author
                 },
                 "datePublished": post.date,
-                "url": `https://logicglow.com/blog/${post.slug}`
+                "url": `https://digital-logic-design.vercel.app/blog/${post.slug}`
               }))
             })}
           </script>

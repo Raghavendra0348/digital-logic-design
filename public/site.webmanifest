@@ -1,7 +1,7 @@
 {
-        "name": "Logic Glow - Digital Logic Design Platform",
-        "short_name": "LogicGlow",
-        "description": "Interactive digital logic design learning platform with simulations and tools",
+        "name": "Digital Logic & Design - Interactive Learning Platform",
+        "short_name": "Digital Logic",
+        "description": "Master digital logic design through interactive simulations and real-time visualizations",
         "start_url": "/",
         "display": "standalone",
         "background_color": "#0f172a",

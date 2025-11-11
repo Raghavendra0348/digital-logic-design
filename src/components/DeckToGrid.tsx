@@ -266,7 +266,7 @@ export const DeckToGrid = () => {
     to: string;
     color: "cyan" | "blue" | "purple" | "green";
   }> = [
-    {
+  {
         title: "Hamming Encoder",
         description: "Error detection and correction visualization",
         icon: Shield,
@@ -279,8 +279,7 @@ export const DeckToGrid = () => {
         icon: Shield,
         to: "/hamming-decoder",
         color: "cyan",
-      }
-      ,
+      },
       {
         title: "K-Map Solver",
         description: "Karnaugh Map simplification and optimization",
@@ -296,6 +295,21 @@ export const DeckToGrid = () => {
         to: "/number-systems",
         color: "cyan",
       },
+      {
+        title: "Arithmetic Circuits",
+        description: "Adders, subtractors & multiplier design",
+        icon: Calculator,
+        to: "/arithmetic-circuits",
+        color: "purple",
+      },
+      {
+        title: "Boolean Algebra",
+        description: "Truth tables, logic gates & simplification",
+        icon: Zap,
+        to: "/boolean-algebra",
+        color: "blue",
+      },
+      
       {
         title: "Combinational Circuits",
         description: "Encoders, decoders & multiplexers",
@@ -315,21 +329,6 @@ export const DeckToGrid = () => {
         description: "Synchronous & asynchronous counter circuits",
         icon: Layers,
         to: "/counter-design",
-        color: "blue",
-      },
-      
-      {
-        title: "Arithmetic Circuits",
-        description: "Adders, subtractors & multiplier design",
-        icon: Calculator,
-        to: "/arithmetic-circuits",
-        color: "purple",
-      },
-      {
-        title: "Boolean Algebra",
-        description: "Truth tables, logic gates & simplification",
-        icon: Zap,
-        to: "/boolean-algebra",
         color: "blue",
       },
       {

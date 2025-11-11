@@ -143,7 +143,7 @@ const Terms = () => {
               </p>
               <ul className="list-none space-y-2 ml-4 mt-3">
                 <li><strong>Email:</strong> <a href="mailto:learnwithhraghava@gmail.com" className="text-secondary underline">learnwithhraghava@gmail.com</a></li>
-                <li><strong>Website:</strong> <a href="https://logicglow.com/contact" className="text-secondary underline">logicglow.com/contact</a></li>
+                <li><strong>Website:</strong> <a href="/contact" className="text-secondary underline">digital-logic-design.vercel.app/contact</a></li>
               </ul>
             </section>
 

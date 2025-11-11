@@ -1,5 +1,5 @@
-# Robots.txt for Logic Glow
-# https://logicglow.com
+# Robots.txt for Digital Logic & Design
+# https://digital-logic-design.vercel.app
 
 User-agent: *
 Allow: /
@@ -10,7 +10,7 @@ Disallow: /private/
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://logicglow.com/sitemap.xml
+Sitemap: https://digital-logic-design.vercel.app/sitemap.xml
 
 # Allow Google AdSense bot
 User-agent: Mediapartners-Google
