@@ -5,7 +5,14 @@ import { NavigationCard } from "@/components/NavigationCard";
 import { CircuitBackground } from "@/components/CircuitBackground";
 import heroImage from "@/assets/hero-circuit.jpg";
 import {  DeckToGrid } from "@/components/DeckToGrid";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
+
+<AdSenseAd 
+  slot="7812693991042173"
+  format="auto"
+  responsive={true}
+/>
 const Index = () => {
   return (
     <div className="min-h-screen relative">
