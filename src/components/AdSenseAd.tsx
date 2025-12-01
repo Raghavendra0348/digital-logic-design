@@ -8,7 +8,7 @@ interface AdSenseAdProps {
 }
 
 export const AdSenseAd = ({
-  slot = "XXXXXXXXXXXXXXXX", // Replace with your actual AdSense ad slot after approval
+  slot = "7812693991042173", // Replace with your actual AdSense ad slot after approval
   format = "auto",
   responsive = true,
   className = "",
