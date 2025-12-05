@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CircuitBackground } from "@/components/CircuitBackground";
 import { Link } from "react-router-dom";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 const BooleanAlgebra = () => {
   const [inputs, setInputs] = useState({ A: false, B: false });
@@ -43,6 +44,11 @@ const BooleanAlgebra = () => {
             Explore logic gates and Boolean operations in real-time
           </p>
         </motion.div>
+
+        {/* Ad - After Page Header */}
+        <div className="max-w-4xl mx-auto mb-8">
+          <AdSenseAd format="auto" responsive={true} />
+        </div>
 
         {/* Input Controls */}
         <motion.div
@@ -188,6 +194,11 @@ const BooleanAlgebra = () => {
             </div>
           </Card>
         </motion.div>
+
+        {/* AdSense Banner */}
+        <div className="mt-12">
+          <AdSenseAd />
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CircuitBackground } from "@/components/CircuitBackground";
 import { Link } from "react-router-dom";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 const Learn = () => {
   const topics = [
@@ -239,6 +240,11 @@ const Learn = () => {
           </p>
         </motion.div>
 
+        {/* Ad - After Introduction */}
+        <div className="max-w-4xl mx-auto my-8">
+          <AdSenseAd format="auto" responsive={true} />
+        </div>
+
         {/* Topics */}
         <div className="max-w-5xl mx-auto space-y-6">
           {topics.map((topic, index) => {
@@ -323,6 +329,11 @@ const Learn = () => {
             </div>
           </Card>
         </motion.div>
+
+        {/* Ad - Bottom of Page */}
+        <div className="max-w-4xl mx-auto mt-12">
+          <AdSenseAd format="auto" responsive={true} />
+        </div>
       </div>
     </div>
   );

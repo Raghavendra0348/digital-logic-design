@@ -4,6 +4,7 @@ import { ArrowLeft, BookOpen, Zap, Clock, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 const SequentialVsCombinationalArticle = () => {
         useEffect(() => {
@@ -57,6 +58,11 @@ const SequentialVsCombinationalArticle = () => {
                                                 <p className="text-xl leading-relaxed mb-8 text-foreground/80">
                                                         Understanding the fundamental distinction between sequential and combinational circuits is crucial for digital system design. This comprehensive guide explores their differences, applications, and when to use each type.
                                                 </p>
+
+                                                {/* Ad - After Introduction */}
+                                                <div className="my-8 not-prose">
+                                                        <AdSenseAd format="auto" responsive={true} />
+                                                </div>
 
                                                 <Card className="mb-8 bg-primary/5 border-primary/20">
                                                         <CardHeader>
@@ -327,6 +333,11 @@ const SequentialVsCombinationalArticle = () => {
                                                 </p>
                                         </div>
 
+                                        {/* AdSense Banner */}
+                                        <div className="my-8">
+                                                <AdSenseAd />
+                                        </div>
+
                                         <div className="border-t border-primary/20 pt-8">
                                                 <Link to="/blog">
                                                         <Button variant="outline">
@@ -334,6 +345,11 @@ const SequentialVsCombinationalArticle = () => {
                                                                 Back to Blog
                                                         </Button>
                                                 </Link>
+
+                                                {/* Ad - Bottom of Article */}
+                                                <div className="my-8">
+                                                        <AdSenseAd format="auto" responsive={true} />
+                                                </div>
                                         </div>
                                 </article>
                         </div>

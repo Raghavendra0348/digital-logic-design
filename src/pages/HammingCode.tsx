@@ -7,13 +7,8 @@ import { Input } from "@/components/ui/input";
 import { CircuitBackground } from "@/components/CircuitBackground";
 import { Link } from "react-router-dom";
 import { calculateHammingCode } from "@/utils/hammingUtils";
-           import { AdSenseAd } from "@/components/AdSenseAd";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
-<AdSenseAd 
-  slot="7812693991042173"
-  format="auto"
-  responsive={true}
-/>
 const HammingEncoder = () => {
   const [dataBits, setDataBits] = useState("1011");
   const [useOddParity, setUseOddParity] = useState(false);
@@ -40,6 +35,11 @@ const HammingEncoder = () => {
           <h1 className="font-display text-5xl font-bold mb-4 text-glow-cyan">Hamming Encoder</h1>
           <p className="text-lg text-muted-foreground">Generate Hamming codes from binary data</p>
         </motion.div>
+
+        {/* Ad - After Header */}
+        <div className="max-w-4xl mx-auto mb-8">
+          <AdSenseAd format="auto" responsive={true} />
+        </div>
 
         <Card className="glass-strong p-8 max-w-3xl mx-auto mb-10 border-2 border-primary/30">
           <div className="flex items-center gap-3 mb-6">
@@ -116,6 +116,11 @@ const HammingEncoder = () => {
             </Card>
           </motion.div>
         )}
+
+        {/* Ad - Bottom of Page */}
+        <div className="max-w-4xl mx-auto mt-8">
+          <AdSenseAd format="auto" responsive={true} />
+        </div>
       </div>
     </div>
   );

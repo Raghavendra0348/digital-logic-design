@@ -7,12 +7,6 @@ import heroImage from "@/assets/hero-circuit.jpg";
 import {  DeckToGrid } from "@/components/DeckToGrid";
 import { AdSenseAd } from "@/components/AdSenseAd";
 
-
-<AdSenseAd 
-  slot="7812693991042173"
-  format="auto"
-  responsive={true}
-/>
 const Index = () => {
   return (
     <div className="min-h-screen relative">
@@ -136,6 +130,11 @@ const Index = () => {
            
           </motion.div>
 
+          {/* Ad - After Hero Section */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <AdSenseAd format="auto" responsive={true} />
+          </div>
+
            <DeckToGrid />
         
         </div>
@@ -144,6 +143,11 @@ const Index = () => {
       {/* Learn Section Preview */}
       <section id="learn" className="py-20 relative z-10">
         <div className="container mx-auto px-4">
+          {/* Ad - Before Learn Section */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <AdSenseAd format="auto" responsive={true} />
+          </div>
+
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}

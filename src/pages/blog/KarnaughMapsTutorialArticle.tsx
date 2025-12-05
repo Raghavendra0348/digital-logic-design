@@ -4,6 +4,7 @@ import { ArrowLeft, BookOpen, Grid3x3, Minimize2, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 const KarnaughMapsTutorialArticle = () => {
         useEffect(() => {
@@ -57,6 +58,11 @@ const KarnaughMapsTutorialArticle = () => {
                                                 <p className="text-xl leading-relaxed mb-8 text-foreground/80">
                                                         Discover how Karnaugh Maps provide an intuitive graphical method for minimizing Boolean functions. Learn the systematic approach to grouping minterms and deriving simplified logic expressions for efficient circuit implementation.
                                                 </p>
+
+                                                {/* Ad - After Introduction */}
+                                                <div className="my-8 not-prose">
+                                                        <AdSenseAd format="auto" responsive={true} />
+                                                </div>
 
                                                 <Card className="mb-8 bg-primary/5 border-primary/20">
                                                         <CardHeader>
@@ -412,6 +418,11 @@ const KarnaughMapsTutorialArticle = () => {
                                                 </Link>
                                         </div>
                                 </article>
+
+                                {/* AdSense Section */}
+                                <div className="mt-8">
+                                        <AdSenseAd />
+                                </div>
                         </div>
                 </div>
         );

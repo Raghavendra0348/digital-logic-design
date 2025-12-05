@@ -4,6 +4,7 @@ import { ArrowLeft, BookOpen, Binary, Calculator, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 const NumberSystemsConversionArticle = () => {
         useEffect(() => {
@@ -57,6 +58,11 @@ const NumberSystemsConversionArticle = () => {
                                                 <p className="text-xl leading-relaxed mb-8 text-foreground/80">
                                                         Master the art of converting between different number systems used in digital electronics and computer science. This comprehensive guide provides step-by-step methods, practical examples, and common pitfalls to avoid.
                                                 </p>
+
+                                                {/* Ad - After Introduction */}
+                                                <div className="my-8 not-prose">
+                                                        <AdSenseAd format="auto" responsive={true} />
+                                                </div>
 
                                                 <Card className="mb-8 bg-primary/5 border-primary/20">
                                                         <CardHeader>
@@ -358,6 +364,11 @@ const NumberSystemsConversionArticle = () => {
                                                 <p className="mb-8">
                                                         Mastering number system conversions is essential for anyone working with digital systems, programming, or computer engineering. Practice these methods regularly, and soon you'll be converting between bases effortlessly. Remember to double-check your work by converting back to verify your results!
                                                 </p>
+
+                                                {/* AdSense Section */}
+                                                <div className="my-8">
+                                                        <AdSenseAd />
+                                                </div>
                                         </div>
 
                                         <div className="border-t border-primary/20 pt-8">
@@ -367,6 +378,11 @@ const NumberSystemsConversionArticle = () => {
                                                                 Back to Blog
                                                         </Button>
                                                 </Link>
+
+                                                {/* Ad - Bottom of Article */}
+                                                <div className="my-8">
+                                                        <AdSenseAd format="auto" responsive={true} />
+                                                </div>
                                         </div>
                                 </article>
                         </div>

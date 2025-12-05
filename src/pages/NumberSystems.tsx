@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { CircuitBackground } from "@/components/CircuitBackground";
 import { Link } from "react-router-dom";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 const NumberSystems = () => {
   const [binary, setBinary] = useState("");
@@ -163,6 +164,11 @@ const NumberSystems = () => {
             Real-time base conversion between Binary, Decimal, Octal, and Hexadecimal
           </p>
         </motion.div>
+
+        {/* Ad - After Header */}
+        <div className="max-w-4xl mx-auto mb-8">
+          <AdSenseAd format="auto" responsive={true} />
+        </div>
 
         {/* Conversion Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -337,6 +343,16 @@ const NumberSystems = () => {
               </p>
             </div>
           </Card>
+        </motion.div>
+
+        {/* AdSense Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="mt-12 max-w-5xl mx-auto"
+        >
+          <AdSenseAd />
         </motion.div>
       </div>
     </div>

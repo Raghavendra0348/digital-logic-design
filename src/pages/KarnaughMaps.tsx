@@ -11,6 +11,7 @@ import { Grid3x3, Lightbulb, RotateCcw, Calculator, FileText, Zap, Download } fr
 import { motion } from "framer-motion";
 import { parseBooleanExpression, validateBooleanExpression } from "@/utils/booleanParser";
 import { KMapSolver } from "@/utils/kmapSolver";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 type CellState = 0 | 1 | 'X'; // 0, 1, or don't care
 
@@ -382,6 +383,12 @@ const KarnaughMaps = () => {
             Interactive tool to simplify Boolean expressions using Karnaugh maps.
             Choose from multiple input methods and get instant visualizations.
           </p>
+
+          {/* Ad - After Header */}
+          <div className="max-w-4xl mx-auto my-8">
+            <AdSenseAd format="auto" responsive={true} />
+          </div>
+
           <div className="flex flex-wrap gap-2 sm:gap-3 justify-center mt-6 sm:mt-8 px-4">
             <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
               5 Input Methods

@@ -8,6 +8,7 @@ import { CircuitBackground } from "@/components/CircuitBackground";
 import { Link } from "react-router-dom";
 import { detectAndCorrectError } from "@/utils/hammingUtils";
 import { toast } from "sonner";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 const HammingDecoder = () => {
   const [receivedCode, setReceivedCode] = useState("1010110");
@@ -50,6 +51,11 @@ const HammingDecoder = () => {
           <h1 className="font-display text-5xl font-bold mb-4 text-glow-cyan">Hamming Decoder</h1>
           <p className="text-lg text-muted-foreground">Detect and correct single-bit errors</p>
         </motion.div>
+
+        {/* Ad - After Header */}
+        <div className="max-w-4xl mx-auto mb-8">
+          <AdSenseAd format="auto" responsive={true} />
+        </div>
 
         <Card className="glass-strong p-8 max-w-3xl mx-auto mb-10 border-2 border-secondary/30">
           <div className="flex items-center gap-3 mb-6">
@@ -125,6 +131,10 @@ const HammingDecoder = () => {
             </Card>
           </motion.div>
         )}
+
+        <div className="mt-12">
+          <AdSenseAd />
+        </div>
       </div>
     </div>
   );

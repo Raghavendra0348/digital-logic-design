@@ -5,13 +5,15 @@ interface AdSenseAdProps {
   format?: "auto" | "fluid" | "rectangle" | "vertical" | "horizontal";
   responsive?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export const AdSenseAd = ({
-  slot = "7812693991042173", // Replace with your actual AdSense ad slot after approval
+  slot,
   format = "auto",
   responsive = true,
   className = "",
+  style = { display: "block" },
 }: AdSenseAdProps) => {
   useEffect(() => {
     try {
@@ -23,18 +25,15 @@ export const AdSenseAd = ({
   }, []);
 
   return (
-    <div className={`adsense-container ${className}`}>
-      {/* AdSense Placeholder - Replace with actual AdSense code after approval */}
+    <div className={`adsense-container my-4 ${className}`}>
       <ins
         className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client="ca-pub-7812693991042173" // Replace with your AdSense publisher ID
+        style={style}
+        data-ad-client="ca-pub-7812693991042173"
         data-ad-slot={slot}
         data-ad-format={format}
         data-full-width-responsive={responsive.toString()}
       />
-
-
     </div>
   );
 };

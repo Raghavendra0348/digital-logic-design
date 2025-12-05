@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, User, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { AdSenseAd } from "@/components/AdSenseAd";
 
 const BooleanAlgebraArticle = () => {
   return (
@@ -65,6 +66,11 @@ const BooleanAlgebraArticle = () => {
                 </p>
               </CardContent>
             </Card>
+
+            {/* Ad - After Introduction */}
+            <div className="my-8 not-prose">
+              <AdSenseAd format="auto" responsive={true} />
+            </div>
 
             <section className="mb-8">
               <h2 className="font-display text-3xl font-bold mb-4 text-primary">What is Boolean Algebra?</h2>
@@ -334,6 +340,11 @@ const BooleanAlgebraArticle = () => {
                 </p>
               </CardContent>
             </Card>
+
+            {/* AdSense Section - Responsive Ad Unit */}
+            <div className="my-12">
+              <AdSenseAd />
+            </div>
           </div>
         </motion.div>
       </article>
